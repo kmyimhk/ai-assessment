@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Readiness Assessment | AI 準備就緒程度評估</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-width: 600px;
+            width: 100%;
+            padding: 3rem 2rem;
+            text-align: center;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .description h2 {
+            font-size: 1.125rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .description ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .description li {
+            color: #374151;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .description li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .language-select {
+            margin-top: 2rem;
+        }
+
+        .language-title {
+            font-size: 1.25rem;
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-english {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-english:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-chinese {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-chinese:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4);
+        }
+
+        .flag {
+            font-size: 1.5rem;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🤖</div>
+        <h1>AI Readiness Assessment</h1>
+        <p class="subtitle">AI 準備就緒程度評估</p>
+
+        <div class="description">
+            <h2>📋 What's Included | 評估內容</h2>
+            <ul>
+                <li>10 short questions (5 minutes) | 10條簡短問題（5分鐘）</li>
+                <li>Evaluate AI readiness & maturity | 評估AI準備狀態及成熟程度</li>
+                <li>Free of charge | 完全免費</li>
+            </ul>
+        </div>
+
+        <div class="description">
+            <h2>🎁 Upon Completion, You Will Receive | 完成後您將獲得</h2>
+            <ul>
+                <li>Professional analysis report | 專業分析報告</li>
+                <li>Tailored recommendations | 量身訂做建議</li>
+                <li>Solution recommendations | 解決方案推薦</li>
+            </ul>
+        </div>
+
+        <div class="language-select">
+            <p class="language-title">Choose Your Language | 選擇語言</p>
+            <div class="button-group">
+                <a href="english.html" class="btn btn-english">
+                    <span class="flag">🇬🇧</span>
+                    <span>English Version</span>
+                </a>
+                <a href="chinese.html" class="btn btn-chinese">
+                    <span class="flag">🇨🇳</span>
+                    <span>中文版本</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Learn Achiever Ltd.</p>
+            <p style="margin-top: 0.5rem;">Enquiry: (WhatsApp) +852 9528 6898</p>
+        </div>
+    </div>
+</body>
+</html>

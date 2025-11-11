@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>為貴公司把脈：AI 準備就緒程度評估</title>
+    <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Domine', serif;
+            background: linear-gradient(135deg, #dbeafe 0%, #c7d2fe 100%);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding: 3rem;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        h1, h2, h3, h4 {
+            color: #1e3a8a;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Domine', serif;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #1d4ed8 0%, #4338ca 100%);
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: #4b5563;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #374151;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #16a34a 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: linear-gradient(135deg, #15803d 0%, #047857 100%);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 0.75rem;
+            background: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #2563eb;
+            transition: width 0.3s;
+        }
+
+        .question-option {
+            display: block;
+            padding: 1.75rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .question-option:hover {
+            border-color: #60a5fa;
+        }
+
+        .question-option.selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .question-option input[type="radio"] {
+            margin-right: 1rem;
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .score-circle {
+            width: 256px;
+            height: 256px;
+            margin: 0 auto;
+        }
+
+        .tier-icon {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            border-radius: 50%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .tier-icon-small {
+            width: 96px;
+            height: 96px;
+            object-fit: contain;
+            border-radius: 50%;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-photo {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .person-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .logo-photo {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .signature {
+            height: 64px;
+            max-width: 200px;
+            object-fit: contain;
+            margin: 1rem 0;
+        }
+
+        .blue-box {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-box {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            background: #f3f4f6;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        .price-reveal {
+            text-align: center;
+            padding: 1.25rem;
+        }
+
+        .star {
+            color: #eab308;
+            display: inline-block;
+        }
+
+        iframe {
+            border: 0;
+            width: 100%;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 1rem; }
+
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Intro Page -->
+        <div id="page-intro" class="page">
+            <h1 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">免費測驗：自行為貴公司把脈</h1>
+            <h2 style="font-size: 2rem; font-weight: 700; text-align: center; color: #1d4ed8; margin-bottom: 1.5rem;"></h2>
+            
+            <div class="blue-box">
+                <h3 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem;">專為企業主管/負責人設計的10項戰略性快速評估</h3>
+                <h4 style="font-size: 1.5rem; font-weight: 700; color: #1e3a8a;"><span style="color: #2563eb; margin-right: 0.5rem;">Q:</span>問：貴公司準備好如何利用AI，倍增效率與利潤了嗎？</h4>
+            </div>
+
+            <p style="font-size: 1.25rem; color: #374151; margin-bottom: 1rem; line-height: 1.75;">
+                在現今快速變化的市場中，了解貴公司在人工智能（AI）方面的定位，是實現巨大增長和效率的關鍵。請真誠地回答以下問題，看看您的公司是否已準備好透過結構化的AI轉型實現雙倍或更高的利潤。
+            </p>
+
+            <button onclick="goToPage('question-1')" class="btn btn-primary" style="width: 100%; padding: 1.5rem 2rem; font-size: 1.875rem;">
+                請點擊開始
+            </button>
+            
+            <div class="footer">
+                <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+            </div>
+        </div>
+
+        <!-- Question Pages (will be generated by JavaScript) -->
+        <div id="question-pages"></div>
+
+        <!-- Results Page -->
+        <div id="page-results" class="page hidden">
+            <div class="header-banner">
+                <h2 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.25rem;">為貴公司把脈：AI 準備就緒程度評估</h2>
+                <p style="font-size: 1.25rem;">您的成績</p>
+            </div>
+            
+            <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">您的成績</h2>
+            <p style="font-size: 1.25rem; text-align: center; color: #374151; margin-bottom: 1rem;">謝謝完成問卷，您和貴公司的得分如下：</p>
+            
+            <div style="text-align: center; margin-bottom: 6rem;">
+                <svg class="score-circle" viewBox="0 0 256 256" style="transform: rotate(-90deg);">
+                    <circle cx="128" cy="128" r="100" stroke="#e5e7eb" stroke-width="20" fill="none" />
+                    <circle id="score-progress" cx="128" cy="128" r="100" stroke="#3b82f6" stroke-width="20" fill="none" 
+                            stroke-dasharray="0 628.318530718" stroke-linecap="round" 
+                            style="transition: stroke-dasharray 0.3s ease-out" />
+                </svg>
+                <div style="margin-top: -220px;">
+                    <div id="animated-score" style="font-size: 4rem; font-weight: 700; color: #1e3a8a;">0</div>
+                    <div style="font-size: 1.5rem; color: #4b5563;">/100</div>
+                </div>
+            </div>
+
+            <h3 id="score-text" class="hidden" style="font-size: 1.875rem; font-weight: 700; text-align: center; margin-bottom: 2rem; margin-top: 8rem;">
+                您的成績: <span id="final-score">0</span> / 100
+            </h3>
+
+            <div class="nav-buttons">
+                <button onclick="resetQuiz(); goToPage('intro')" class="btn btn-secondary">
+                    ↻ 重新評估
+                </button>
+                <button onclick="viewAnalysis()" class="btn btn-primary">
+                    查看您的分析 →
+                </button>
+            </div>
+            
+            <div class="footer">
+                <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+            </div>
+        </div>
+
+        <!-- Tier Analysis and Part B pages will be dynamically generated -->
+        <div id="dynamic-pages"></div>
+
+        <!-- Enrollment Page -->
+    </div>
+
+    <script>
+        // Application State
+        const state = {
+            currentPage: 'intro',
+            answers: {},
+            score: 0,
+            tier: null,
+            priceRevealed: false,
+            finalPriceRevealed: false
+        };
+
+        // Questions Data
+        const questions = [
+            {
+                id: 1,
+                title: "策略與願景",
+                options: [
+                    { value: 'A', points: 10, text: "我們有清晰定義的 AI 路線圖及未來12-24個月的可衡量目標。" },
+                    { value: 'B', points: 5, text: "我們不時討論AI，但尚未正式確定策略或長期計劃。" },
+                    { value: 'C', points: 1, text: "我們認為AI 效用有限，目前未能取代我們的同事，所以尚未積極應用於日常工作之中。" }
+                ]
+            },
+            {
+                id: 2,
+                title: "認定機會",
+                options: [
+                    { value: 'A', points: 10, text: "我們有清晰的應用AI例驗證方法，並已找到潛在的「快速取勝」方案。" },
+                    { value: 'B', points: 5, text: "我們意識到AI的重要性，但未能確定如何具體地應用於我們的業務之中。" },
+                    { value: 'C', points: 1, text: "我們尚在觀望之中，未探索AI如何影響我們的業務功能，例如銷售、人力資源或物流等方面的應用 。" }
+                ]
+            },
+            {
+                id: 3,
+                title: "成本效益",
+                options: [
+                    { value: 'A', points: 10, text: "我們正在進行與AI相關的項目，用以實現成本效益和最大限度地利用資源。" },
+                    { value: 'B', points: 5, text: "我們目前以傳統方法節省成本，尚未利用AI來實現顯著節省。" },
+                    { value: 'C', points: 1, text: "我們不相信AI能為本公司帶來可量度及有價值的差異。" }
+                ]
+            },
+            {
+                id: 4,
+                title: "自動化與工作流程",
+                options: [
+                    { value: 'A', points: 10, text: "我們正在積極構建「AI代理與工作流程」，以實現關鍵業務流程的自動化。" },
+                    { value: 'B', points: 5, text: "我們對自動化感興趣，但不知道如何踏出構建AI驅動系統的第一步。" },
+                    { value: 'C', points: 1, text: "目前，我們的大多數核心流程，仍然是手動的或依賴傳統的技術。" }
+                ]
+            },
+            {
+                id: 5,
+                title: "提示工程與內容生成",
+                options: [
+                    { value: 'A', points: 10, text: "我們的團隊知道如何使用成熟的提示結構和關鍵詞 來生成專業內容（如：圖像、音樂、影片等）。" },
+                    { value: 'B', points: 5, text: "我們使用基礎的AI工具，但缺乏結構化的提示工程方法，故此難以獲得穩定、優質的內容。" },
+                    { value: 'C', points: 1, text: "我們尚未開始將AI用於內容或創意工作。" }
+                ]
+            },
+            {
+                id: 6,
+                title: "實施與控制",
+                options: [
+                    { value: 'A', points: 10, text: "我們有所需的資源和人才、清晰的實施與控制計劃，確保AI解決方案能成功落地。" },
+                    { value: 'B', points: 5, text: "我們對如何應用AI工具有一定的想法，但擔心成功推行的複雜性。" },
+                    { value: 'C', points: 1, text: "我們目前的重點仍放在基本業務運營上，而不是重大的技術應用。" }
+                ]
+            },
+            {
+                id: 7,
+                title: "風險與治理",
+                options: [
+                    { value: 'A', points: 10, text: "我們對AI風險、治理及事件處理有清晰的理解。" },
+                    { value: 'B', points: 5, text: "我們擔心AI的風險，但尚未制定正式的治理框架。" },
+                    { value: 'C', points: 1, text: "我們目前未考慮使用AI的道德或合規風險。" }
+                ]
+            },
+            {
+                id: 8,
+                title: "行業特定應用",
+                options: [
+                    { value: 'A', points: 10, text: "我們正在積極探索AI如何按功能重塑我們的商業模式 ，涵蓋內部（例如財政）到外部（例如客服）的範疇。" },
+                    { value: 'B', points: 5, text: "我們知道AI對某些行業有幫助，但我們不確定它對我們這個行業的實際效益。" },
+                    { value: 'C', points: 1, text: "AI對我們未必有用，它對科技公司比較合適。" }
+                ]
+            },
+            {
+                id: 9,
+                title: "框架開發",
+                options: [
+                    { value: 'A', points: 10, text: "我們有一個明確的10步計劃和先後次序框架，為公司實踐AI確立優先順序和持續發展。" },
+                    { value: 'B', points: 5, text: "我們的AI學習是零星的，依賴線上文章分享而不是結構化方法。" },
+                    { value: 'C', points: 1, text: "我們正在等待一個完美的現成解決方案出現。" }
+                ]
+            },
+            {
+                id: 10,
+                title: "領導力與諮詢",
+                options: [
+                    { value: 'A', points: 10, text: "我們透過AI專家的策略性量身定制建議，有效地指導我們的轉型。" },
+                    { value: 'B', points: 5, text: "我們在內部處理所有AI決策，但過程中或有些延遲或混亂。" },
+                    { value: 'C', points: 1, text: "我們積極避免或拒絕任何來自外部的AI諮詢。" }
+                ]
+            }
+        ];
+
+        // Tier Data
+        const tierData = {
+            vanguard: {
+                name: "AI 領軍者",
+                icon: "https://i.imgur.com/DDE9pyT.png",
+                tagline: "恭喜 — 您是真正的精英 AI 領袖！",
+                subtitle: "您以 AI 策略領先。專注於擴展和治理以倍增回報。"
+            },
+            architect: {
+                name: "AI 執行建築師",
+                icon: "https://i.imgur.com/adSRCoT.png",
+                tagline: "您擁有強大的運營能力 — 現在調整策略和治理以可靠地擴展。",
+                subtitle: "您是主動的實施者，準備好立即獲利。"
+            },
+            explorer: {
+                name: "AI 探索者",
+                icon: "https://i.imgur.com/Z5eKOC0.png",
+                tagline: "您正在探索 — 建立清晰的路線圖和快速取勝以更快地展示價值。",
+                subtitle: "您是好奇的探索者，您必須專注於基礎風險。"
+            },
+            imperative: {
+                name: "AI 轉型迫切",
+                icon: "https://i.imgur.com/u39SJCk.png",
+                tagline: "您的業務需要緊急、實用的基礎 — 從治理、快速取勝和高管協調開始。",
+                subtitle: ""
+            }
+        };
+
+        // Initialize Question Pages
+        function initializeQuestions() {
+            const container = document.getElementById('question-pages');
+            
+            questions.forEach((question, index) => {
+                const questionNum = index + 1;
+                const pageDiv = document.createElement('div');
+                pageDiv.id = `page-question-${questionNum}`;
+                pageDiv.className = 'page hidden';
+                
+                pageDiv.innerHTML = `
+                    <div class="header-banner">
+                        <h2 style="font-size: 1.5rem; font-weight: 700; color: white;">為貴公司把脈：AI 準備就緒程度評估</h2>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="color: #2563eb; font-weight: 700; font-size: 1.125rem;">問題 ${questionNum} / 10</span>
+                            <span style="color: #4b5563; font-size: 1.125rem;">${Math.round((questionNum / 10) * 100)}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${(questionNum / 10) * 100}%"></div>
+                        </div>
+                    </div>
+
+                    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">${question.title}</h2>
+
+                    <div id="options-${questionNum}">
+                        ${question.options.map(option => `
+                            <label class="question-option" data-question="${question.id}" data-points="${option.points}">
+                                <input type="radio" name="question-${question.id}" value="${option.value}">
+                                <span style="display: inline-block; vertical-align: top; width: calc(100% - 36px);">
+                                    <strong>${option.value}.</strong> ${option.text}
+                                </span>
+                            </label>
+                        `).join('')}
+                    </div>
+
+                    <div class="nav-buttons">
+                        ${questionNum > 1 ? `
+                            <button onclick="goToPage('question-${questionNum - 1}')" class="btn btn-secondary">
+                                ← 上一頁
+                            </button>
+                        ` : ''}
+                        ${questionNum < 10 ? `
+                            <button id="next-btn-${questionNum}" onclick="goToPage('question-${questionNum + 1}')" class="btn btn-primary" disabled style="margin-left: auto;">
+                                下一頁 →
+                            </button>
+                        ` : `
+                            <button id="submit-btn" onclick="calculateScore()" class="btn btn-success" disabled style="margin-left: auto;">
+                                提交
+                            </button>
+                        `}
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                `;
+                
+                container.appendChild(pageDiv);
+            });
+
+            // Add event listeners to all options
+            document.querySelectorAll('.question-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionId = parseInt(this.dataset.question);
+                    const points = parseInt(this.dataset.points);
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Remove selected class from siblings
+                    this.parentElement.querySelectorAll('.question-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    
+                    // Store answer
+                    state.answers[questionId] = points;
+                    
+                    // Enable next/submit button
+                    if (questionId === 10) {
+                        document.getElementById('submit-btn').disabled = Object.keys(state.answers).length !== 10;
+                    } else {
+                        document.getElementById(`next-btn-${questionId}`).disabled = false;
+                    }
+                });
+            });
+        }
+
+        // Navigation
+        function goToPage(pageName) {
+            console.log('goToPage called with:', pageName);
+            
+            // Track previous page before changing
+            if (state.currentPage && state.currentPage !== pageName) {
+                state.previousPage = state.currentPage;
+                console.log('Previous page set to:', state.previousPage);
+                
+                // Special handling for partb-1: save the SOURCE page (not partb-2)
+                if (pageName === 'partb-1' && !state.partb1SourcePage) {
+                    // First time entering partb-1, save the source
+                    state.partb1SourcePage = state.currentPage;
+                    console.log('Saved partb-1 source page:', state.partb1SourcePage);
+                } else if (pageName === 'partb-1' && state.currentPage === 'partb-2') {
+                    // Returning to partb-1 from partb-2, restore original source
+                    state.previousPage = state.partb1SourcePage;
+                    console.log('Restored partb-1 source page:', state.previousPage);
+                }
+            }
+            
+            // Reset partb1SourcePage when leaving partb-1 for a non-partb-2 page
+            if (state.currentPage === 'partb-1' && pageName !== 'partb-2') {
+                state.partb1SourcePage = null;
+            }
+            
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show requested page
+            const targetPage = document.getElementById(`page-${pageName}`);
+            console.log('Found element:', !!targetPage);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                state.currentPage = pageName;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                console.log('Page shown:', pageName);
+            } else {
+                console.error('Page element not found: page-' + pageName);
+            }
+        }
+
+        // Go back to previous page
+        function goToPreviousPage() {
+            console.log('goToPreviousPage called');
+            console.log('Previous page:', state.previousPage);
+            console.log('Current page:', state.currentPage);
+            
+            if (state.previousPage) {
+                goToPage(state.previousPage);
+            } else {
+                // Fallback: if no previous page tracked, try to go back in history
+                console.log('No previous page tracked, using history.back()');
+                window.history.back();
+            }
+        }
+
+        // Navigate to the appropriate tier characteristics page
+        
+        function resetPricingState() {
+            state.priceRevealed = false;
+            state.finalPriceRevealed = false;
+            setTimeout(() => {
+                const step1 = document.getElementById('price-step-1');
+                const step2 = document.getElementById('price-step-2');
+                const finalPrice = document.getElementById('final-price');
+                if (step1) step1.classList.remove('hidden');
+                if (step2) step2.classList.add('hidden');
+                if (finalPrice) finalPrice.classList.add('hidden');
+            }, 100);
+        }
+
+        function navigateToTierCharacteristics() {
+            console.log('navigateToTierCharacteristics called, tier:', state.tier);
+            const tierPages = {
+                'vanguard': 'tier1-vanguard-characteristics',
+                'architect': 'tier2-architect-characteristics',
+                'explorer': 'tier3-explorer-characteristics',
+                'imperative': 'tier4-imperative-characteristics'
+            };
+            const targetPage = tierPages[state.tier];
+            console.log('Target page:', targetPage);
+            if (targetPage) {
+                goToPage(targetPage);
+            } else {
+                console.error('No target page found for tier:', state.tier);
+            }
+        }
+
+        // Navigate within tier pages
+        function navigateTierPage(pageName) {
+            goToPage(pageName);
+        }
+
+        // Calculate Score
+        function calculateScore() {
+            let total = 0;
+            Object.values(state.answers).forEach(points => {
+                total += points;
+            });
+            state.score = total;
+            
+            // Determine tier
+            if (total >= 85) state.tier = 'vanguard';
+            else if (total >= 60) state.tier = 'architect';
+            else if (total >= 35) state.tier = 'explorer';
+            else state.tier = 'imperative';
+            
+            showResults();
+        }
+
+        // Show Results with Animation
+        function showResults() {
+            goToPage('results');
+            
+            // Animate score
+            let current = 0;
+            const increment = state.score / 50;
+            const circle = document.getElementById('score-progress');
+            const scoreDisplay = document.getElementById('animated-score');
+            const scoreText = document.getElementById('score-text');
+            const finalScoreSpan = document.getElementById('final-score');
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= state.score) {
+                    current = state.score;
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        scoreText.classList.remove('hidden');
+                        finalScoreSpan.textContent = state.score;
+                    }, 500);
+                }
+                
+                const rounded = Math.round(current);
+                scoreDisplay.textContent = rounded;
+                const circumference = 628.318530718;
+                const progress = (rounded / 100) * circumference;
+                circle.setAttribute('stroke-dasharray', `${progress} ${circumference}`);
+            }, 30);
+        }
+
+        // 請續看分析
+        function viewAnalysis() {
+            const tier = state.tier;
+            const data = tierData[tier];
+            
+            const dynamicPages = document.getElementById('dynamic-pages');
+            dynamicPages.innerHTML = `
+                <div id="page-tier-1" class="page">
+                    <div class="header-banner">
+                        <h2 style="font-size: 1.5rem; font-weight: 700; color: white;">為貴公司把脈：AI 準備就緒程度評估</h2>
+                        <p style="font-size: 1.25rem;">您的分析</p>
+                    </div>
+
+                    <h2 style="font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 1.5rem;">貴司的位置是 …</h2>
+
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                        <img src="${data.icon}" alt="${data.name}" style="width: 200px; height: 200px; object-fit: contain; border-radius: 0.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">${data.name}</h3>
+                        ${data.subtitle ? `<p style="font-size: 1.5rem; color: #1d4ed8; margin-bottom: 1.5rem;">${data.subtitle}</p>` : ''}
+                    </div>
+
+                    <div class="blue-box">
+                        <p style="font-size: 1.25rem; line-height: 1.75; font-weight: 600;">${data.tagline}</p>
+                    </div>
+
+                    <p style="font-size: 1.5rem; font-weight: 600; text-align: center; color: #1f2937; margin-bottom: 1.5rem;">繼續查看專家為您提供的詳細分析</p>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('results')" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="navigateToTierCharacteristics()" class="btn btn-primary">
+                            查看您的特徵 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- Part B Pages -->
+                
+
+                <div id="page-tier1-vanguard-characteristics" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第一級: AI 領軍者 — 精英領袖</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">您的特徵</h2>
+<p style="font-size: 1.125rem; line-height: 1.3; margin-bottom: 0.75rem;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>您的分數顯示貴公司已是市場上利用 AI 取得實質成果的優秀企業。您擁有明確的 AI 戰略圖、充足的資源和成熟的實施與管控體系。</p>
+<p style="font-size: 1.125rem; line-height: 1.3; margin-bottom: 0.75rem;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>儘管成績優良，但現實環境競爭激烈。若要穩坐龍頭，您需要不斷優化與AI相關的風險治理，並需要尋求尖端的量身定制建議。</p>
+<p style="font-size: 1.125rem; line-height: 1.3; margin-bottom: 0.75rem;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>成功需要尋求尖端的量身定制建議</p>
+<p style="font-size: 1.125rem; line-height: 1.3; margin-bottom: 0.75rem;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>您最大的隱憂是滿足現狀，一旦 AI 技術快速升級換代，現有優勢恐將被對手迎頭趕上。</p>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('tier-1')">← 上一頁：分析</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier1-vanguard-nextsteps')">下一頁：下一步 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier1-vanguard-nextsteps" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第一級: AI 領軍者 — 精英領袖</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">下一步</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">從成功邁向主導地位</h3>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">1</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">精通高級細節，確保每個 AI 項目都能產生最大的投資回報率 — 不僅僅是學習</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">2</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">您需要專注於辨識並採納更為精準的 AI 用例驗證與目標營運模式，這是普通企業所缺乏的。</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">3</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">透過詳細、保密的建議優化策略</p>
+</div>
+</div>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier1-vanguard-characteristics')">← 上一頁：特徵</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier1-vanguard-solution')">下一頁：解決方案 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier1-vanguard-solution" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第一級: AI 領軍者 — 精英領袖</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">解決提案：</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">掌握 5 倍 ROI</h3>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">本工作坊為您提供深度鑽研訓練。</h3>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>獨家一對一諮詢</h3>
+<p>專享有限的 30 分鐘個別諮詢名額，針對貴公司特定的 AI 路線圖瓶頸，獲得量身定制的建議。</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>進階提示詞工程</h3>
+<p>獲得 20多種複雜提示詞結構和1000多個關鍵詞列表，助您在內容生成和自動化上大幅超越競爭對手。</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>深度戰略優化</h3>
+<p>花一天的時間深入研究 AI 路線圖、成熟度評估和風險治理等高階議題，助您鞏固並擴大既有優勢。</p>
+</div>
+</div>
+<div class="cta-box">
+<h2 style="font-size: 1.75rem; margin-bottom: 1rem;">捍衛您的領先地位！立即鎖定您的 VIP 諮詢名額，享受特別早鳥優惠！</h2>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier1-vanguard-nextsteps')">← 上一頁：下一步</button>
+<button class="btn btn-primary" onclick="goToPage('partb-1')" style="color: white;">下一頁：工作坊優勢 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier2-architect-characteristics" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第二級: AI 執行師 — 積極實施者</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">您的特徵</h2>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>您對 AI 有良好的基礎認識，正積極探索自動化和機會</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>中等分數表明零星的努力依賴於分散的信息，而不是結構化的逐步規劃</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>遇到障礙：推出解決方案的複雜性，難以從基本 AI 工具獲得一致的高質量結果</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>目前錯失可衡量的成本效益和銷售生產力</p>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('tier-1')">← 上一頁：分析</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier2-architect-nextsteps')">下一頁：下一步 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier2-architect-nextsteps" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第二級: AI 執行師 — 積極實施者</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">下一步</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">實施一個有保證的藍圖</h3>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">1</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">停止試錯：採用經過驗證的結構化框架，確保每項 AI 投資直接轉化為利潤</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">2</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">使用 Canvas 模型識別 AI 快速取勝方案</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">3</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">學習構建 AI 智能代理和工作流程的技術，實現可靠的流程自動化</p>
+</div>
+</div>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier2-architect-characteristics')">← 上一頁：特徵</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier2-architect-solution')">下一頁：解決方案 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier2-architect-solution" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第二級: AI 執行師 — 積極實施者</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">解決提案：</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">獲取逐步實踐藍圖</h3>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">本工作坊旨在將您的良好意願轉化為可衡量的業績。</h3>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>親手繪製 AI 戰略藍圖</h3>
+<p>每位參加者將使用 10 步驟和設計思維方法制定自己的 AI 路線圖。</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>裝備即用型工具</h3>
+<p>工作坊結束後，您將獲得一套完整的 AI 路線圖、行動計劃與框架，可立即部署到您的企業。</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>實戰演練與獲利</h3>
+<p>透過提示工程的實務練習和針對銷售、人資、客服等功能的真實世界案例，讓您所學即能用於獲利。</p>
+</div>
+</div>
+<div class="cta-box">
+<h2 style="font-size: 1.75rem; margin-bottom: 1rem;">將雄心轉化為成果！立即預留席位並解鎖特別早鳥折扣！</h2>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier2-architect-nextsteps')">← 上一頁：下一步</button>
+<button class="btn btn-primary" onclick="goToPage('partb-1')" style="color: white;">下一頁：工作坊優勢 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier3-explorer-characteristics" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第三級: AI 探索者 — 求知探索者</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">您的特徵</h2>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>您明白 AI 的重要性，但缺乏果斷前進所需的策略和人才</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>分數反映出您對風險和實施複雜性的擔憂，導致關鍵投資延誤</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>這種觀望態度是最大的風險 — 競爭對手已在物流、製造和金融領域整合 AI</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>沒有結構化的計劃，將錯失在市場力量之前定義自己目標運營模式的機會</p>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('tier-1')">← 上一頁：分析</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier3-explorer-nextsteps')">下一頁：下一步 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier3-explorer-nextsteps" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第三級: AI 探索者 — 求知探索者</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">下一步</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">透過獲得控制權來降低風險</h3>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">1</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">透過知識和結構化方法獲得控制權</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">2</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">了解落地 AI 解決方案的核心實踐</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">3</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">學習實施 AI 治理以自信地降低風險</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">4</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">透過結構化框架和量身定制的建議建立信心</p>
+</div>
+</div>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier3-explorer-characteristics')">← 上一頁：特徵</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier3-explorer-solution')">下一頁：解決方案 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier3-explorer-solution" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第三級: AI 探索者 — 求知探索者</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">解決提案：</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">建立自信、風險意識的基礎</h3>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">本工作坊是為您緩解風險而設的策略性工具。</h3>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>聚焦快速取勝方案</h3>
+<p>學習運用 Canvas 模型 識別 AI 快速取勝提案，用最低的投入產生立竿見影的 ROI。</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>功能轉型藍圖</h3>
+<p>深入探討 AI 如何按功能重塑您的商業模式，為您的行業提供具體可行的啟動點。</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>理解風險治理</h3>
+<p>深入了解 AI 風險、治理及實務案例，讓您擺脫不確定性，作出明智決策。</p>
+</div>
+</div>
+<div class="cta-box">
+<h2 style="font-size: 1.75rem; margin-bottom: 1rem;">自信地開始您的 AI 之旅！立即確保您的席位，並解鎖特別的早鳥折扣！</h2>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier3-explorer-nextsteps')">← 上一頁：下一步</button>
+<button class="btn btn-primary" onclick="goToPage('partb-1')" style="color: white;">下一頁：工作坊優勢 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier4-imperative-characteristics" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第四級: AI 急需轉型者 — 緊急轉型</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">您的特徵</h2>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>核心流程可能是手動或依賴傳統技術</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>要麼避免外部諮詢，要麼等待「完美解決方案」 — 這是一個重大的戰略錯誤</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>沒有正式的 AI 策略或長期計劃 = 每個職能領域（從人力資源到客戶服務）每天都在損失潛在利潤</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">✓</span>這不是技術問題；這是生存問題</p>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('tier-1')">← 上一頁：分析</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier4-imperative-nextsteps')">下一頁：下一步 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier4-imperative-nextsteps" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第四級: AI 急需轉型者 — 緊急轉型</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">下一步</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">立即確保您公司的未來！</h3>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">1</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">停止依賴傳統的節省成本模式，轉向 AI 驅動的銷售與生產力增長</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">2</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">需要全面、結構化地深入了解基本的 AI 戰略原則</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">3</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">獲得逐步計劃和設計思維方法，立即定義 AI 優先事項</p>
+</div>
+</div>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier4-imperative-characteristics')">← 上一頁：特徵</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier4-imperative-solution')">下一頁：解決方案 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier4-imperative-solution" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">為貴公司把脈：AI 準備就緒程度評估</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">第四級: AI 急需轉型者 — 緊急轉型</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">解決提案：</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">生存與增長的完整藍圖</h3>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">本工作坊是您的一日密集式人工智慧策略MBA課程。</h3>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>獲取完整的轉型藍圖</h3>
+<p>您將擁有一套可立即實施的 AI 路線圖、行動計劃與框架，在一天內獲得相當於一年的戰略成果。</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>零距離實戰演示</h3>
+<p>帶來真實世界應用案例，讓您親自參與提示工程的演示與實踐，立即獲得見效。</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>取得首次勝利</h3>
+<p>學習運用 Canvas 模型 識別 AI 快速取勝提案，產生可衡量的初期成果，為後續投資建立信心和基礎。</p>
+</div>
+</div>
+<div class="cta-box">
+<h2 style="font-size: 1.75rem; margin-bottom: 1rem;">機不可失，您的企業命脈在此一舉！今天，立即報名，以鎖定您的特別折扣！</h2>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier4-imperative-nextsteps')">← 上一頁：下一步</button>
+<button class="btn btn-primary" onclick="goToPage('partb-1')" style="color: white;">下一頁：工作坊優勢 →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-enrollment" class="page hidden">
+                    <div class="container">
+
+
+<div class="header-banner">
+<h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: #93c5fd; font-weight: 700;">工作坊報名表</h1>
+</div>
+
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">報名參加我們的 AI 轉型工作坊</h2>
+<div class="intro-text">
+<p style="font-size: 1.125rem; line-height: 1.4; margin-bottom: 1rem; font-style: italic;">
+<strong>恭喜您完成 AI 準備度評估！</strong>
+</p>
+<p style="font-size: 1.125rem; line-height: 1.4;">
+                    您已踏出 AI 轉型的第一步。現在，在我們專為您的級別設計的專屬工作坊中鎖定您的席位。填寫下面的表格以預留您的位置並解鎖您的早鳥折扣。
+                </p>
+</div>
+</div>
+
+<div class="form-container">
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem; text-align: center;">AI 策略性轉型戰略工作坊報名表</h3>
+<div style="background: white; padding: 0; margin-bottom: 1rem; font-size: 0.95rem; color: #374151; line-height: 1.3; font-style: italic;">
+<p style="margin-bottom: 0.25rem;">• 填寫所有必填欄位</p>
+<p>• 您的早鳥 VIP 特惠在填寫此報名表後 48 小時內有效。</p>
+</div>
+<!-- REPLACE THIS IFRAME SRC WITH YOUR ACTUAL GOOGLE FORM EMBED URL -->
+<iframe frameborder="0" height="3053" marginheight="0" marginwidth="0" src="https://docs.google.com/forms/d/e/1FAIpQLSexWjOff5J_7R4ENTyllTUDClNGN0EHdkAKrlvANwh40J922w/viewform?embedded=true" width="100%">
+                Loading…
+            </iframe>
+<!-- Uncomment below and comment out the iframe above if needed -->
+<!--
+            <div style="text-align: center; padding: 3rem;">
+                <p style="font-size: 1.25rem; margin-bottom: 1rem; color: #475569;">
+                    Click the button below to access our enrollment form:
+                </p>
+                <a href="https://docs.google.com/forms/YOUR_FORM_LINK" 
+                   target="_blank" 
+                   style="display: inline-block; padding: 1.25rem 3rem; background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); color: white; text-decoration: none; border-radius: 0.75rem; font-size: 1.25rem; font-weight: 700; transition: all 0.3s;">
+                    Open Enrollment Form →
+                </a>
+            </div>
+            -->
+</div>
+
+<div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 1.25rem; border-radius: 0.75rem; text-align: center; margin-bottom: 1rem;">
+<h3 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; color: white;">感謝您！</h3>
+<p style="font-size: 1.25rem; opacity: 0.95;">工作坊見！🎉</p>
+</div>
+
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('results')">← 返回結果</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-partb-1" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI 轉型的計劃及流程：</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">倍增利潤的實踐藍圖</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">（粵語工作坊）</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">獨特優勢</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 0.5rem;">量化成果與戰略控制</p>
+                    <p style="font-size: 1.25rem; text-align: center; color: #4b5563; margin-bottom: 1rem;">一天內透過AI轉型您的業務</p>
+
+                    <div class="blue-box">
+                        <p style="font-size: 1.25rem; line-height: 1.75;">
+                            身為高管，您需要的是實際成果 。本工作坊旨在透過提升<strong>銷售與生產力</strong>及確保<strong>成本效益</strong>兩大核心領域提供解決方案 。
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <div class="feature-box" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-color: #2563eb;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.75rem;">✓ 親自制定公司的 AI 實踐路線圖</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">參加者將親自制定公司的 AI 實踐路線圖 ，從而掌握未來12-24個月轉型的戰略控制權 。帶走一套專為您的行業和公司規模定制的實施計劃，包含優先快速取勝項目和長期計劃。</em></p>
+                        </div>
+
+                        <div class="feature-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: #16a34a;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #15803d; margin-bottom: 0.75rem;">✓ 可立即部署的 AI 框架</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">參加者將獲得一套可立即部署的 AI 框架 及確保 AI 解決方案成功落地 的計劃 ，從而降低風險並加速部署。帶走您可以立即實施的可操作工具。</em></p>
+                        </div>
+
+                        <div class="feature-box" style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-color: #9333ea;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #6b21a8; margin-bottom: 0.75rem;">✓ 實戰 AI 工具與提示詞工程</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">獲得使用領先 AI 平台（包括 ChatGPT、Claude 和行業專用工具）的實踐經驗。學習進階提示工程技術，包括 20 多種結構和 1000 多個關鍵詞，立即產生專業成果。</em></p>
+                        </div>
+
+                        <div class="feature-box" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #9a3412; margin-bottom: 0.75rem;">✓ 限額一對一諮詢（僅限 10 名）</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">額外提供的一對一諮詢（名額有限），能為您的投資提供量身定制的戰略建議，加速轉型並降低風險 。獲得我們 AI 戰略專家針對您的具體挑戰提供的個性化指導。</em></p>
+                        </div>
+
+                        <div class="feature-box" style="background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-color: #ca8a04;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #854d0e; margin-bottom: 0.75rem;">✓ ROI 計算器與衡量框架</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">獲得我們專有的 AI ROI 計算器和衡量框架，以量化您的 AI 計劃的影響並向利益相關者展示價值。為 AI 項目建立有說服力的商業案例。</em></p>
+                        </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPreviousPage()" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="goToPage('partb-2')" class="btn btn-primary">
+                            下一頁 - 參加者預期成果 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <div id="page-partb-2" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI 轉型的計劃及流程：</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">倍增利潤的實踐藍圖</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">（粵語工作坊）</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">參加者預期成果</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 1rem;">完成工作坊後您將獲得的成果</p>
+
+                    <div style="background: #eff6ff; border: 2px solid #93c5fd; padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 1rem;">
+                        <p style="text-align: center; font-size: 1.25rem; font-weight: 600; color: #1e3a8a;">完成工作坊後，您將能夠：</p>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #3b82f6; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">戰略清晰應用</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">深入洞察 AI 如何按功能轉型您的商業模式，並識別 3-5 個對您業務有重大影響的 AI 用例。</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #10b981; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">即用式工具包</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">帶走一套完整的 AI 路線圖、行動計劃與框架，可即時部署到貴公司，包含優先項目。</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #a855f7; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">客制化AI藍圖</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">運用逐步實踐計劃及設計思維方法，制定您專屬的 AI 路線圖，並可識別轉型優先順序。</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #f97316; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">提示詞工程精要</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">掌握 20多種提示結構和 1000多個關鍵詞列表，並有機會實踐提示工程，適用於真實世界的用例 。</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #eab308; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">AI 治理與風險管理</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">建立 AI 治理指南和風險管理協議，以自信地部署 AI 解決方案。</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #6366f1; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">建立商業案例</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">為 AI 項目建立有說服力的商業案例，並發展內部 AI 能力和團隊結構。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fef9c3 0%, #fed7aa 100%); border-left: 4px solid #eab308; padding: 1.5rem; border-radius: 0 0.75rem 0.75rem 0;">
+                        <p style="font-size: 1.25rem; font-weight: 700; color: #1f2937;">💡 結果：您將帶走可執行的計劃，而不僅僅是理論。</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('partb-1')" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="goToPage('workshop-contents')" class="btn btn-primary">
+                            下一頁 - 工作坊內容 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: 工作坊內容 -->
+                <div id="page-workshop-contents" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI 轉型的計劃及流程：</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">倍增利潤的實踐藍圖</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">（粵語工作坊）</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">工作坊內容</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 1rem;">全日密集式課程</p>
+
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #2563eb; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem; text-align: center;">核心主題 - 課程內容/議程：</h3>
+                        <p style="font-size: 1.5rem; font-weight: 600; color: #1e3a8a; text-align: center; margin-bottom: 1rem;">AI 轉型10步計劃</p>
+                        <p style="font-size: 1.125rem; color: #4b5563; text-align: center;"></p>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">戰略規劃與評估</h3>
+                        <p style="font-size: 1.125rem; color: #4b5563; margin-bottom: 1rem; font-style: italic;"></p>
+                        
+                        <ul style="list-style: none; padding-left: 1rem;">
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">1</span>
+                                AI 路線圖與成熟度評估
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">2</span>
+                                AI 用例合理化與目標運營模式
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">3</span>
+                                運用 Canvas模型識別 AI 快速取勝方案
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">4</span>
+                                如何構建AI代理和工作流程以實現自動化
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">5</span>
+                                了解 AI 風險、治理及事件處理
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">第二部份：行業應用深入探討（含案例)</h3>
+                        <p style="font-size: 1.125rem; color: #4b5563; margin-bottom: 1rem; font-style: italic;"></p>
+                        
+                        <ul style="list-style: none; padding-left: 1rem;">
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">6</span>
+                                零售與貿易 — 銷售與營銷
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">7</span>
+                                金融與投資服務
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">8</span>
+                                人力資源、法律與合規
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">9</span>
+                                客戶服務
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">10</span>
+                                物流、製造與營運
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #10b981; text-align: center;">
+                        <p style="font-size: 1.25rem; font-weight: 700; color: #065f46; margin-bottom: 0.5rem;">🎯 全日密集式工作坊</p><p style="font-size: 1.125rem; font-weight: 600; color: #065f46;">9:30 AM - 6:00 PM</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('partb-2')" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="goToPage('testimonials')" class="btn btn-primary">
+                            下一頁 - 學員心聲 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: 學員心聲 -->
+                <div id="page-testimonials" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI 轉型的計劃及流程：</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">倍增利潤的實踐藍圖</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">（粵語工作坊）</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">學員心聲</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 0.5rem;">聆聽我們成功學員的心聲</p>
+<p style="font-size: 0.875rem; color: #6b7280; text-align: left; margin-bottom: 1rem; margin-top: 0.5rem;">原始見證為中文。</p>
+
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 1.5rem; border-radius: 0.75rem; border: 3px solid #f59e0b; margin-bottom: 3rem; text-align: center;">
+                        <div style="text-align: center; font-size: 2.5rem; margin-bottom: 0.75rem;">⭐⭐⭐⭐⭐</div>
+                        <p style="font-size: 1.25rem; font-weight: 700; color: #92400e; text-align: center;">Ben Sir 的平均評分</p><p style="font-size: 1.125rem; color: #92400e; text-align: center;">4.73 分（來自 250+ 位學員）</p>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">Peter Auyeung, 公司董事</h3>
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"Ben Sir 呢個 course 改變咗我對 AI 嘅睇法。 出面好多課程都只係教用邊幾種AI工具……但佢教嘅係Canvas Model同埋戰略思維，出面根本唔易搵到。"</em></p>
+                        
+                            <img src="https://i.imgur.com/8j4BkE3.png" alt="Peter Auyeung signature" style="height: 2rem; margin-top: 0.5rem;"></div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">Alice Wong, 人力資源經理</h3>
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"工作坊嘅互動性真係超勁！分組討論同埋實戰練習超正。我特別鍾意佢點樣將 AI 應用落去 Human resources 同其他部門。Ben Sir 講書好生動，將啲複雜嘅理論，畀佢講到可以即刻拎返公司用。"</em></p>
+                        
+                            <img src="https://i.imgur.com/4wsy9N8.png" alt="Alice Wong signature" style="height: 2rem; margin-top: 0.5rem;"></div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">David Lee，公司董事</h3>
+                            
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"我最緊張係 物流同營運 點樣慳到成本 啦。課程入面講到 AI 代理同自動化工作流程 嘅個案，幫到我睇清楚 AI 點樣可以幫我哋慳返一大筆錢，又唔會影響到品質。"</em></p>
+                        
+                            <img src="https://i.imgur.com/kJY97sg.png" alt="David Lee signature" style="height: 2rem; margin-top: 0.5rem;"></div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">C K Kwok，部門經理</h3>
+                            
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"… 佢引導我哋點樣自己去設立公司嘅 AI 實踐路線圖，呢種由上而下嘅策略思維，係你睇書或者上網都搵唔到嘅。而家，我唔單止睇到公司未來 一兩年 要點行，仲揸到一套持續評估嘅工具，真係 將控制權攞番喺自己手上。""</em></p>
+                        </div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">Helen Mo, 店主</h3>
+                            
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"經過一日學習，我對AI如何用於 行動計劃、物流、營運客服等各方面 嘅潛能有咗全新而明確嘅睇法。呢份藍圖令我好肯定，我哋已經準備好迎接下一個增長階段。"</em></p>
+                            <img src="https://i.imgur.com/oewXZYY.png" alt="Helen Mo signature" style="height: 2rem; margin-top: 0.5rem;">
+                        </div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">Cynthia Lam, 客戶服務主管</h3>
+                            
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"AI 唔單止係傾偈機械人，佢可以完全令成個客戶服務系統自動化。上完一日堂，認識到了未來客服的走勢，又可以點樣做得到。"</em></p>
+                        
+                            <img src="https://i.imgur.com/AcSzjHP.png" alt="Cynthia Lam signature" style="height: 2rem; margin-top: 0.5rem;">
+                            </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('workshop-contents')" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="goToPage('workshop-details')" class="btn btn-primary">
+                            下一頁 - 課程詳情 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: 課程詳情 -->
+                <div id="page-workshop-details" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI 轉型的計劃及流程：</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">倍增利潤的實踐藍圖</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">（粵語工作坊）</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">課程詳情</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 1rem;">後勤與實用資訊</p>
+
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #2563eb; margin-bottom: 2.5rem; text-align: center;">
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">主講者</h3>
+                        <img src="https://i.imgur.com/TDGIbwd.png" alt="Ben Sir" style="width: 160px; height: 160px; border-radius: 50%; object-fit: cover; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); margin: 1.5rem auto; display: block;">
+                        <h4 style="font-size: 1.5rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">BEN Sir, MSc</h4>
+                        <p style="font-size: 1.125rem; color: #374151;">課程總監、 設計思維、變革管理與 AI 首席顧問</p>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">部份相關資歷 </h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                美國加州柏克萊大學HAAS商學院《數字化、數據及轉型領導力》證書
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                美國PROSCI 變革管理學證書
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                英國桑德蘭大學工商管理碩士講師
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                香港董事學會特邀講者
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                香港浸會大學資訊科技學部特聘講師
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                香港城市大學講師
+                            </li>
+                            <li style="font-size: 1.125rem; line-height: 1.75;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                受聘到中國、香港、國際著名企業擔任顧問或演講
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; margin-bottom: 2.5rem;">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">📅 日期與時間</h4>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>日期：</strong> 2026.01.19 (周一)</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>時間：</strong> 0930 - 1800</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 1.5rem;"><strong>下次開課日期：</strong> 請Whatsapp 聯絡我們</p>
+                        
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; margin-top: 1.5rem;">📍 地點</h4>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>地點：</strong> 請參考報名表格</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 1.5rem;"><strong>設計：</strong> 親身參與工作坊，實戰訓練</p>
+                        
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; margin-top: 1.5rem;">👥 班級規模與形式</h4>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>最佳參加人數：</strong> 16 (確保個性化關注)</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>學習風格：</strong> 互動工作坊、小組練習、實戰演練</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 1.5rem;"><strong>語言：</strong> 粵語。英文講義</p>
+                        
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; margin-top: 1.5rem;">💻 技術要求</h4>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>先決條件：</strong> 無需技術背景</p>
+                        <p style="font-size: 1.125rem;"><strong>請自備：</strong> 手提電腦（Windows 或 Mac）</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('testimonials')" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="goToPage('organiser-message')" class="btn btn-primary">
+                            下一頁 - 主辦者的話 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: Message from Organiser -->
+                <div id="page-organiser-message" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI 轉型的計劃及流程：</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">倍增利潤的實踐藍圖</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">（粵語工作坊）</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">主辦者的話</h2>
+                    
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                        <img src="https://i.imgur.com/9aPGrEP.jpeg" alt="Learn Achiever" style="width: 200px; height: auto; border-radius: 0; box-shadow: none; margin: 1.5rem auto; display: block;">
+                        <p style="font-size: 1.25rem; color: #374151; font-weight: 600;">Learn Achiever Ltd. - 您的 AI 轉型夥伴</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #f59e0b; margin-bottom: 1rem; text-align: center;">
+                        <h3 style="font-size: 1.875rem; font-weight: 700; color: #92400e;">獨家邀約：</h3>
+                        <p style="font-size: 1.5rem; font-weight: 600; color: #92400e;">您和貴公司的 AI 轉型藍圖 VIP 專屬通道</p>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1rem;"><strong><strong>親愛的朋友，您好：</strong></strong></p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">感謝您完成了"企業 AI 準備度"評估，現在您正掌握著貴公司未來增長的關鍵。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">我必須向您高度表揚 <strong>Ben Sir (Mr Ben Wong)</strong>，我們的首席數據分析、企業轉型、設計思維與人工智能顧問. 在 Learn Achiever，我們親眼見證了 AI 在數百家企業中的轉型力量。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">這場為期一天的課程經過精心設計，將高層次的戰略理論（例如 Canvas 模型、按部就班的 AI 路線圖等 ）與高度互動的分組實戰練習 完美結合。這也正是為什麼學員們一致稱讚課程知識的實戰適用性極高。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">我們的使命很簡單：讓 AI 知識普及化，使各種規模的企業都能接觸尖端技術。無論您是希望擴大計劃的 AI 領軍者，還是剛開始 AI 轉型之旅，我們都會在每一步為您提供指導。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">這個工作坊代表多年的實戰經驗，濃縮成一天的密集式實用學習。我們不只是教理論 - 我們專注於根據像您這樣的公司的實證結果，教授真正有效的方法。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">我們的承諾超越工作坊。我們正在建立一個由前瞻性領袖組成的社群，他們正在用 AI 塑造商業的未來。當您加入我們時，您不僅僅是參加工作坊 - 您正在加入一場運動。</p>
+                        
+                        <div style="background: #fef9c3; border: 2px solid #9ca3af; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0;">
+                            <p style="font-size: 1.25rem; font-weight: 700; color: #92400e; text-align: center;">⏰ 貴公司的 AI 轉型不容拖延。我們強烈建議您立即鎖定席位。</p>
+                            <p style="font-size: 1.125rem; color: #92400e; text-align: center; margin-top: 0.5rem;">請在接下來的三天內報名，以確保享有此VVIP 價格。</em></p>
+                        </div>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1rem;">謝謝您的支持；期待您的參加。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 0.5rem;">此致，</p>
+                        
+                        <img src="https://i.imgur.com/flmhqRz.png" alt="Dr Yim signature" style="height: 60px; margin: 1rem 0;">
+                        
+                        <div style="margin: 1rem 0;">
+                            <p style="font-size: 1.125rem; font-weight: 700; color: #1e3a8a;">Dr. Yim, D.Litt., MSc, FHKUM, ProM</p>
+                            <p style="font-size: 1rem; color: #6b7280;">Learn Achiever Ltd./ Dr Yim</p>
+                        </div>
+                        
+                        <p style="font-size: 1.125rem; color: #374151; font-weight: 600;">聯絡： WhatsApp: +852 9528 6898</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('workshop-details')" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="goToPage('director-message')" class="btn btn-primary">
+                            下一頁 - 課程總監的話 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: Message from Programme 董事 -->
+                <div id="page-director-message" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI 轉型的計劃及流程：</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">倍增利潤的實踐藍圖</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">（粵語工作坊）</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">課程總監的話</h2>
+                        <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 1.5rem; border-radius: 0.75rem; border: 3px solid #f59e0b; display: inline-block;">
+                            <p style="font-size: 1.875rem; font-weight: 700; color: #92400e;">停止浪費時間，用 AI 策略決勝未來</p>
+                        </div>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1rem;"><strong>各位您好，</strong></p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">在過去幾年，我有幸協助超過 50 家企業進行 AI 轉型。從財富 500 強公司到雄心勃勃的初創企業，我見證了什麼有效，什麼無效。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;"><strong>最大的教訓？</strong>AI 的成功不在於擁有最先進的技術或最大的預算。而在於擁有正確的策略、正確的思維和開始的勇氣。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">我是 Ben Wong，這套《AI 轉型的計劃及流程》工作坊，正是專門為像您一樣的繁忙高管所設計——您需要的是成果，而不是空泛的理論。</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #2563eb; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">為什麼這個工作坊與眾不同：</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.15rem; font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>超過 2,000 小時的研究</strong>濃縮成頂級原則
+                            </li>
+                            <li style="margin-bottom: 0.15rem; font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>戰略與實踐兼備</strong> - 可立即實施的平衡方法
+                            </li>
+                            <li style="margin-bottom: 0.15rem; font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>無廢話、無理論</strong> - 只有有效的可行見解
+                            </li>
+                            <li style="margin-bottom: 0.15rem; font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>來自效率翻倍的公司的真實案例</strong>
+                            </li>
+                            <li style="font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>可立即實施的實用框架</strong>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">您的時間，就是公司最寶貴的資產！您負擔不起花費數月閱讀複雜論文或盲目測試各種新 AI 工具的成本。正因如此，我替您完成了最困難的部分：我將超過 3,000 小時持續地對AI的研究、開發和實地顧問經驗，濃縮成了最頂尖的整體原則與指引。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">在僅僅一天的密集課程中，我將交付一套戰略與實踐完美平衡的課程。您將以最易懂的方式，獲得穩固的 AI 轉型基礎，確保您帶著正確的思維和工具離開。這套課程將立刻幫助您過濾市場雜訊，為您的辦公室節省無數寶貴的摸索時間。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">我親眼見證公司透過策略性採用 AI，<strong>效率翻倍、成本降低 40%，並開啟全新的商業模式。</strong>但更重要的是，我看到像您這樣的領導者獲得信心，帶領他們的組織進入 AI 時代。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">無論您的分數是 AI 領軍者還是需要緊急轉型，請記住：<strong>每一個成功的 AI 之旅都始於一步。</strong>這個工作坊可以成為您的那一步。</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #10b981; margin-bottom: 1rem; text-align: center;">
+                        <p style="font-size: 1.25rem; font-weight: 700; color: #065f46; margin-bottom: 1rem;">現在是您擺脫旁觀者身份，邁向清晰、高利潤未來的最佳時機。</p>
+                        <p style="font-size: 1.125rem; color: #065f46;">我誠摯歡迎您的加入，把握這場高效的密集課程，以及我們為少數精英保留的、無價的 一對一現場諮詢 服務。</p>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1rem;">讓我們一起，共同轉變您公司的未來。</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1rem;">此致，</p>
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 0.5rem;">您的 AI 策略顧問</p>
+                        
+                        <img src="https://i.imgur.com/FiHJ3By.png" alt="Ben Sir signature" style="height: 60px; margin: 1rem 0;">
+                        
+                        <div style="margin: 1rem 0;">
+                            <p style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a;">BEN Sir</p>
+                            <p style="font-size: 1rem; color: #6b7280;">課程總監、設計思維、變革管理與 AI 首席顧問</p>
+                        </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('organiser-message')" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="goToPage('investment')" class="btn btn-primary">
+                            下一頁 - 您的投資 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: Your Investment -->
+                <div id="page-investment" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI 轉型的計劃及流程：</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">倍增利潤的實踐藍圖</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">（粵語工作坊）</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">了解課程價值</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 1rem;">您的投資</p>
+
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #2563eb; margin-bottom: 1rem; text-align: center;">
+                        <h3 style="font-size: 2rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">標準工作坊費用</h3>
+                        <p style="font-size: 3rem; font-weight: 700; color: #dc2626; text-decoration: line-through;">HK$14,800</p>
+                        <p style="font-size: 1.125rem; color: #6b7280;">每位參加者</p>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <h3 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem; text-align: center;">您的投資包含：</h3>
+                        
+                        <div style="background: white; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; margin-bottom: 1.5rem;">
+                            <div style="display: flex; align-items: start; margin-bottom: 1rem;">
+                                <div style="flex-shrink: 0; width: 48px; height: 48px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="color: white; font-size: 1.5rem; font-weight: 700;">1</span>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem;">全日密集式工作坊</h4>
+                                    <p style="font-size: 1.125rem; color: #374151; margin-bottom: 0.25rem;">7.5 小時專家主導的培訓和實戰練習</p>
+                                    <p style="font-size: 1rem; color: #16a34a; font-weight: 700;">價值： HK$7,500</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start; margin-bottom: 1rem;">
+                                <div style="flex-shrink: 0; width: 48px; height: 48px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="color: white; font-size: 1.5rem; font-weight: 700;">2</span>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem;">一對一 AI 戰略路線圖</h4>
+                                    <p style="font-size: 1.125rem; color: #374151; margin-bottom: 0.25rem;">到訪貴公司協助您實施 AI 計劃</p>
+                                    <p style="font-size: 1rem; color: #16a34a; font-weight: 700;">價值： HK$3,500</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start; margin-bottom: 1rem;">
+                                <div style="flex-shrink: 0; width: 48px; height: 48px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="color: white; font-size: 1.5rem; font-weight: 700;">3</span>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem;">綜合工具包與資源</h4>
+                                    <p style="font-size: 1.125rem; color: #374151; margin-bottom: 0.25rem;">ROI 計算器、模板和專屬 AI 資源</p>
+                                    <p style="font-size: 1rem; color: #16a34a; font-weight: 700;">價值： HK$2,000</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start;">
+                                <div style="flex-shrink: 0; width: 48px; height: 48px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="color: white; font-size: 1.5rem; font-weight: 700;">4</span>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem;">30 天工作坊後支援</h4>
+                                    <p style="font-size: 1.125rem; color: #374151; margin-bottom: 0.25rem;">WhatsApp/電郵諮詢並進行指導</p>
+                                    <p style="font-size: 1rem; color: #16a34a; font-weight: 700;">價值： HK$1,800</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); padding: 1.5rem; border-radius: 0.75rem; border: 3px solid #10b981; margin-top: 2rem; text-align: center;">
+                            <p style="font-size: 1.5rem; font-weight: 700; color: #065f46;">價值： HK$14,800</em></p>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 1rem; border-radius: 1rem; border: 3px solid #9ca3af; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #92400e; margin-bottom: 1rem; text-align: center;">為什麼這項投資值得：</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.5rem; font-size: 1.125rem; line-height: 1.3; color: #374151;">
+                                <span style="font-size: 1.5rem; margin-right: 0.5rem;">💡</span>
+                                <strong>平均投資回報率：</strong> 首年 AI 實施即可達到 80-200%
+                            </li>
+                            <li style="margin-bottom: 0.5rem; font-size: 1.125rem; line-height: 1.3; color: #374151;">
+                                <span style="font-size: 1.5rem; margin-right: 0.5rem;">💡</span>
+                                <strong>不作為的成本：</strong> 競爭對手獲得 40% 效率優勢
+                            </li>
+                            <li style="font-size: 1.125rem; line-height: 1.3; color: #374151;">
+                                <span style="font-size: 1.5rem; margin-right: 0.5rem;">💡</span>
+                                <strong>一項成功的 AI 計劃</strong>通常可節省工作坊成本的 10 倍
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('director-message')" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="resetPricingState(); setTimeout(() => goToPage('partb-3'), 50);" class="btn btn-primary">
+                            下一頁 - 特別優惠 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <div id="page-partb-3" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI 轉型的計劃及流程：</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">倍增利潤的實踐藍圖</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">（粵語工作坊）</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                        <div style="display: inline-block; background: #dc2626; color: white; padding: 0.75rem 2rem; border-radius: 9999px; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;" class="animate-pulse">
+                            限時優惠
+                        </div>
+                        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">特別邀請早鳥價</h2>
+                        <p style="font-size: 1.5rem; color: #374151;">僅限評估參加者</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); padding: 1.25rem; border-radius: 1rem; border: 4px solid #10b981; margin-bottom: 1rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                        <div style="text-align: center; margin-bottom: 1.5rem;">
+                            <p style="color: #4b5563; font-size: 1.5rem; margin-bottom: 0.5rem; text-decoration: line-through;">❌ 原價： HK$14,800</p>
+                            <p style="color: #4b5563; font-size: 1.5rem; margin-bottom: 1rem; text-decoration: line-through;">❌ 特別優惠： HK$9,800</p>
+                            <p style="color: #4b5563; font-size: 1.25rem; margin-bottom: 1rem; text-decoration: line-through;">❌ 您節省： HK$5,000 (34% OFF)</p>
+
+                            <div id="price-step-1" style="margin: 2rem 0;">
+                                <p style="font-size: 1.875rem; font-weight: 700; color: #dc2626; margin-bottom: 1.5rem;">等等 — 您無需支付此價格！</p>
+                                <button onclick="revealPrice1()" class="btn animate-pulse" style="background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); color: white; font-size: 1.5rem; padding: 1.5rem 3rem;">
+                                    點擊查看您的今日專屬優惠！
+                                </button>
+                            </div>
+
+                            <div id="price-step-2" class="hidden" style="margin: 2rem 0;">
+                                <div style="position: relative; margin-bottom: 1.5rem;">
+                                    <div style="font-size: 5rem; font-weight: 700; color: #2563eb; animation: bounce 1s infinite;">
+                                        $2,800
+                                    </div>
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(12deg); font-size: 6rem; font-weight: 700; color: #dc2626; opacity: 0.5;">
+                                        ❌
+                                    </div>
+                                </div>
+                                <p style="font-size: 1.875rem; font-weight: 700; color: #dc2626; margin: 1.5rem 0;">等等 — 您仍然無需支付此價格！</p>
+                                <button onclick="revealFinalPrice()" class="btn animate-pulse" style="background: linear-gradient(135deg, #16a34a 0%, #059669 100%); color: white; font-size: 1.5rem; padding: 1.5rem 3rem;">
+                                    揭曉最終價格 - 今天報名！
+                                </button>
+                            </div>
+
+                            <div id="final-price" class="hidden" style="margin: 2rem 0;">
+                                <div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); padding: 1.25rem; border-radius: 1rem; margin-bottom: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                                    <p style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">如果您今天報名並付款，額外減免 $500！</p>
+                                    <div style="font-size: 5rem; font-weight: 700; color: #15803d; margin-bottom: 1rem;">
+                                        HK$2,300
+                                    </div>
+                                    <p style="font-size: 1.875rem; font-weight: 700; color: #1f2937;">僅此！</p>
+                                </div>
+                                <div style="background: white; padding: 1.5rem; border-radius: 0.75rem; border: 4px solid #16a34a;">
+                                    <p style="font-size: 1.5rem; font-weight: 700; color: #15803d; margin-bottom: 0.5rem;">💰 您節省： HK$12,500 (84% OFF!)</p>
+                                    <p style="font-size: 1.25rem; color: #374151;">從 HK$14,800 降至 HK$2,300</p>
+                                </div>
+
+                                <div style="background: white; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #86efac; margin-top: 1.5rem;">
+                                    <h3 style="font-size: 1.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">🎁 獨家獎勵：今日早鳥禮物！</h3>
+                                    <ul style="list-style: none; padding: 0;">
+                                        <li style="margin-bottom: 0.75rem; font-size: 1.125rem;">
+                                            🎓 <strong>獎勵 #1：</strong> 延長至 60 天（而非 30 天）的工作坊後支援 (價值： HK$2,000)
+                                        </li>
+                                        <li style="font-size: 1.125rem;">
+                                            🎓 <strong>獎勵 #2：</strong> 邀請參加專屬 AI 領袖校友聯誼活動 (價值： 無價)
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div style="background: #fef9c3; border: 2px solid #9ca3af; padding: 1.5rem; border-radius: 0.5rem; margin-top: 1.5rem;">
+                                    <p style="text-align: center; font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem;">⏰ 此特價將於以下時間到期：</p>
+                                    <p style="text-align: center; font-size: 2.5rem; font-weight: 700; color: #dc2626;">3 天</p>
+                                    <p style="text-align: center; font-size: 1.125rem; color: #374151; margin-top: 0.5rem;">或當我們達到 16 名參加者（以先到者為準）</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="enroll-button-container" style="text-align: center; margin-bottom: 1rem;">
+                        <button onclick="goToPage('enrollment')" class="btn" style="background: linear-gradient(135deg, #16a34a 0%, #059669 100%); color: white; font-size: 1.875rem; padding: 2rem 4rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                            立即報名 - 確保您的席位
+                        </button>
+                        <p style="font-size: 1.125rem; color: #4b5563; margin-top: 1rem;">每場限 16 名參加者</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('investment')" class="btn btn-secondary">
+                            ← 上一頁
+                        </button>
+                        <button onclick="goToPage('enrollment')" class="btn btn-primary" style="background: linear-gradient(135deg, #16a34a 0%, #059669 100%);">
+                            立即報名 →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+            `;
+            
+            goToPage('tier-1');
+        }
+
+        // Price Reveal Functions
+        function revealPrice1() {
+            document.getElementById('price-step-1').classList.add('hidden');
+            document.getElementById('price-step-2').classList.remove('hidden');
+            state.priceRevealed = true;
+        }
+
+        function revealFinalPrice() {
+            document.getElementById('price-step-2').classList.add('hidden');
+            document.getElementById('final-price').classList.remove('hidden');
+            document.getElementById('enroll-button-container').classList.remove('hidden');
+            state.finalPriceRevealed = true;
+        }
+
+        // Reset Quiz
+        function resetQuiz() {
+            state.answers = {};
+            state.score = 0;
+            state.tier = null;
+            state.priceRevealed = false;
+            state.finalPriceRevealed = false;
+            
+            // Clear all selections
+            document.querySelectorAll('.question-option').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.querySelector('input[type="radio"]').checked = false;
+            });
+            
+            // Disable all next/submit buttons
+            for (let i = 1; i <= 9; i++) {
+                const btn = document.getElementById(`next-btn-${i}`);
+                if (btn) btn.disabled = true;
+            }
+            const submitBtn = document.getElementById('submit-btn');
+            if (submitBtn) submitBtn.disabled = true;
+        }
+
+        // Update enrollment page with user data
+        function updateEnrollmentPage() {
+            const tierNames = {
+                vanguard: '第一級: AI 領軍者',
+                architect: 'Tier 2: AI Execution Architect',
+                explorer: 'Tier 3: AI Explorer',
+                imperative: 'Tier 4: AI Transformation Imperative'
+            };
+            
+            const enrollTier = document.getElementById('enroll-tier'); if(enrollTier) enrollTier.textContent = tierNames[state.tier];
+            const enrollScore = document.getElementById('enroll-score'); if(enrollScore) enrollScore.textContent = `Score: ${state.score}/100`;
+        }
+
+        // Override goToPage to update enrollment info and reset pricing
+        const originalGoToPage = goToPage;
+        goToPage = function(pageName) {
+            if (pageName === 'enrollment') {
+                updateEnrollmentPage();
+            }
+            // Reset pricing page state when navigating to it
+            if (pageName === 'partb-3') {
+                state.priceRevealed = false;
+                state.finalPriceRevealed = false;
+                // Reset the price display
+                setTimeout(() => {
+                    const step1 = document.getElementById('price-step-1');
+                    const step2 = document.getElementById('price-step-2');
+                    const finalPrice = document.getElementById('final-price');
+                    if (step1) step1.classList.remove('hidden');
+                    if (step2) step2.classList.add('hidden');
+                    if (finalPrice) finalPrice.classList.add('hidden');
+                }, 100);
+            }
+            originalGoToPage(pageName);
+        };
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeQuestions();
+        });
+
+        // Bounce animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-25px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Readiness Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Domine', serif;
+            background: linear-gradient(135deg, #dbeafe 0%, #c7d2fe 100%);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding: 3rem;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        h1, h2, h3, h4 {
+            color: #1e3a8a;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Domine', serif;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #1d4ed8 0%, #4338ca 100%);
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: #4b5563;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #374151;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #16a34a 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: linear-gradient(135deg, #15803d 0%, #047857 100%);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 0.75rem;
+            background: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #2563eb;
+            transition: width 0.3s;
+        }
+
+        .question-option {
+            display: block;
+            padding: 1.75rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .question-option:hover {
+            border-color: #60a5fa;
+        }
+
+        .question-option.selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .question-option input[type="radio"] {
+            margin-right: 1rem;
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .score-circle {
+            width: 256px;
+            height: 256px;
+            margin: 0 auto;
+        }
+
+        .tier-icon {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            border-radius: 50%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .tier-icon-small {
+            width: 96px;
+            height: 96px;
+            object-fit: contain;
+            border-radius: 50%;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-photo {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .person-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .logo-photo {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .signature {
+            height: 64px;
+            max-width: 200px;
+            object-fit: contain;
+            margin: 1rem 0;
+        }
+
+        .blue-box {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-box {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            background: #f3f4f6;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        .price-reveal {
+            text-align: center;
+            padding: 1.25rem;
+        }
+
+        .star {
+            color: #eab308;
+            display: inline-block;
+        }
+
+        iframe {
+            border: 0;
+            width: 100%;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 1rem; }
+
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Intro Page -->
+        <div id="page-intro" class="page">
+            <h1 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">TEST YOURSELF:</h1>
+            <h2 style="font-size: 2rem; font-weight: 700; text-align: center; color: #1d4ed8; margin-bottom: 1.5rem;">A FREE TEST FOR YOUR COMPANY</h2>
+            
+            <div class="blue-box">
+                <h3 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem;">A Quick, 10-Question Strategic Assessment for Company Senior Executives</h3>
+                <h4 style="font-size: 1.5rem; font-weight: 700; color: #1e3a8a;"><span style="color: #2563eb; margin-right: 0.5rem;">Q:</span>Are Your Company's Efficiency and Profits Ready to Double by Using AI?</h4>
+            </div>
+
+            <p style="font-size: 1.25rem; color: #374151; margin-bottom: 1rem; line-height: 1.75;">
+                In today's fast-paced market, knowing where you stand with Artificial Intelligence is the key to unlocking massive growth and efficiency. 
+                This assessment will help you understand your AI readiness and provide a customised roadmap for transformation.
+            </p>
+
+            <button onclick="goToPage('question-1')" class="btn btn-primary" style="width: 100%; padding: 1.5rem 2rem; font-size: 1.875rem;">
+                Start Assessment
+            </button>
+            
+            <div class="footer">
+                <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+            </div>
+        </div>
+
+        <!-- Question Pages (will be generated by JavaScript) -->
+        <div id="question-pages"></div>
+
+        <!-- Results Page -->
+        <div id="page-results" class="page hidden">
+            <div class="header-banner">
+                <h2 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.25rem;">AI READINESS ASSESSMENT</h2>
+                <p style="font-size: 1.25rem;">Your Results</p>
+            </div>
+            
+            <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">YOUR AI READINESS SCORE</h2>
+            <p style="font-size: 1.25rem; text-align: center; color: #374151; margin-bottom: 1rem;">Thank you for completing the questionnaire. Here is your assessment result:</p>
+            
+            <div style="text-align: center; margin-bottom: 6rem;">
+                <svg class="score-circle" viewBox="0 0 256 256" style="transform: rotate(-90deg);">
+                    <circle cx="128" cy="128" r="100" stroke="#e5e7eb" stroke-width="20" fill="none" />
+                    <circle id="score-progress" cx="128" cy="128" r="100" stroke="#3b82f6" stroke-width="20" fill="none" 
+                            stroke-dasharray="0 628.318530718" stroke-linecap="round" 
+                            style="transition: stroke-dasharray 0.3s ease-out" />
+                </svg>
+                <div style="margin-top: -220px;">
+                    <div id="animated-score" style="font-size: 4rem; font-weight: 700; color: #1e3a8a;">0</div>
+                    <div style="font-size: 1.5rem; color: #4b5563;">/100</div>
+                </div>
+            </div>
+
+            <h3 id="score-text" class="hidden" style="font-size: 1.875rem; font-weight: 700; text-align: center; margin-bottom: 2rem; margin-top: 8rem;">
+                Your Score: <span id="final-score">0</span> / 100
+            </h3>
+
+            <div class="nav-buttons">
+                <button onclick="resetQuiz(); goToPage('intro')" class="btn btn-secondary">
+                    ↻ Retake Assessment
+                </button>
+                <button onclick="viewAnalysis()" class="btn btn-primary">
+                    View Your Analysis →
+                </button>
+            </div>
+            
+            <div class="footer">
+                <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+            </div>
+        </div>
+
+        <!-- Tier Analysis and Part B pages will be dynamically generated -->
+        <div id="dynamic-pages"></div>
+
+        <!-- Enrollment Page -->
+    </div>
+
+    <script>
+        // Application State
+        const state = {
+            currentPage: 'intro',
+            answers: {},
+            score: 0,
+            tier: null,
+            priceRevealed: false,
+            finalPriceRevealed: false
+        };
+
+        // Questions Data
+        const questions = [
+            {
+                id: 1,
+                title: "Strategy & Vision",
+                options: [
+                    { value: 'A', points: 10, text: "We have a clearly defined AI roadmap with measurable targets for the next 12-24 months." },
+                    { value: 'B', points: 5, text: "We discuss AI from time to time, but we haven't formalised a strategy or long-term plan." },
+                    { value: 'C', points: 1, text: "We believe AI cannot replace our staff nor have we considered fully using it for our core business." }
+                ]
+            },
+            {
+                id: 2,
+                title: "Identifying Opportunities",
+                options: [
+                    { value: 'A', points: 10, text: "We have a clear methodology for validating AI use cases and have identified potential Quick Wins." },
+                    { value: 'B', points: 5, text: "We know AI is important but are unsure how to apply it specifically to our business functions." },
+                    { value: 'C', points: 1, text: "We haven't explored how AI can impact our business functions like Sales, HR, or Logistics." }
+                ]
+            },
+            {
+                id: 3,
+                title: "Cost & Efficiency",
+                options: [
+                    { value: 'A', points: 10, text: "We have active projects leveraging AI to achieve cost efficiency and maximise resource usage." },
+                    { value: 'B', points: 5, text: "Our current cost-saving methods are traditional, and we haven't explored AI for significant savings." },
+                    { value: 'C', points: 1, text: "We don't believe AI can make a measurable and valuable difference in our profitability." }
+                ]
+            },
+            {
+                id: 4,
+                title: "Automation & Workflow",
+                options: [
+                    { value: 'A', points: 10, text: "We are actively building AI Agents and workflows for automation across key business processes." },
+                    { value: 'B', points: 5, text: "We are interested in automation but don't know the first steps to building an AI-powered system." },
+                    { value: 'C', points: 1, text: "Most of our core processes are still manual or rely on traditional technology." }
+                ]
+            },
+            {
+                id: 5,
+                title: "Prompt Engineering & Content Generation",
+                options: [
+                    { value: 'A', points: 10, text: "Our teams know how to use sophisticated prompt structures and keywords to generate professional content." },
+                    { value: 'B', points: 5, text: "We use basic AI tools but struggle to get consistent, quality results without a structured prompt engineering approach." },
+                    { value: 'C', points: 1, text: "We haven't started using AI for content or creative work." }
+                ]
+            },
+            {
+                id: 6,
+                title: "Implementation & Control",
+                options: [
+                    { value: 'A', points: 10, text: "We possess the necessary resources and talent, and a clear Implementation & Control plan to ensure successful AI solution deployment." },
+                    { value: 'B', points: 5, text: "We have an idea for how to use AI tools but are concerned about the complexity of rolling it out successfully." },
+                    { value: 'C', points: 1, text: "Our focus is still on basic business operations, not major technology rollouts." }
+                ]
+            },
+            {
+                id: 7,
+                title: "Risk & Governance",
+                options: [
+                    { value: 'A', points: 10, text: "We have a clear understanding of AI Risk, Governance, and how to handle incidents." },
+                    { value: 'B', points: 5, text: "We're worried about the risks of AI, but we don't have a formal governance framework in place." },
+                    { value: 'C', points: 1, text: "We haven't thought about the ethical or compliance risks of using AI." }
+                ]
+            },
+            {
+                id: 8,
+                title: "Industry-Specific Applications",
+                options: [
+                    { value: 'A', points: 10, text: "We are actively exploring how AI can reshape our business model by function covering internal to external areas." },
+                    { value: 'B', points: 5, text: "We know AI helps in some industries, but we're unsure of its practical benefits for our specific field." },
+                    { value: 'C', points: 1, text: "We've dismissed AI as only being useful for tech companies but not for us." }
+                ]
+            },
+            {
+                id: 9,
+                title: "Developing a Framework",
+                options: [
+                    { value: 'A', points: 10, text: "We have a defined 10-step plan and priority framework to continuously identify AI priorities and drive sustained development." },
+                    { value: 'B', points: 5, text: "Our AI learning is sporadic, relying on online articles rather than a structured approach." },
+                    { value: 'C', points: 1, text: "We are waiting for a perfect out-of-the-box solution to appear." }
+                ]
+            },
+            {
+                id: 10,
+                title: "Leadership & Consultation",
+                options: [
+                    { value: 'A', points: 10, text: "We have access to tailor-made advice from AI strategy experts to guide our transformation." },
+                    { value: 'B', points: 5, text: "We are handling all AI decisions internally, which may lead to delays or confusion." },
+                    { value: 'C', points: 1, text: "We are actively avoiding or discouraging external consultation on AI." }
+                ]
+            }
+        ];
+
+        // Tier Data
+        const tierData = {
+            vanguard: {
+                name: "AI Vanguard",
+                icon: "https://i.imgur.com/DDE9pyT.png",
+                tagline: "Congratulations — You are a True Elite AI Leader!",
+                subtitle: "You are leading with AI strategy. Focus on scaling and governance to multiply returns."
+            },
+            architect: {
+                name: "AI Execution Architect",
+                icon: "https://i.imgur.com/adSRCoT.png",
+                tagline: "You have strong operational capabilities — now align strategy and governance to scale reliably.",
+                subtitle: "You are a Proactive Implementer, Ready for Immediate Profit."
+            },
+            explorer: {
+                name: "AI Explorer",
+                icon: "https://i.imgur.com/Z5eKOC0.png",
+                tagline: "You are exploring — build a clear roadmap and quick wins to demonstrate value faster.",
+                subtitle: "You are an Inquisitive Explorer, you have to focus on Foundational Risk."
+            },
+            imperative: {
+                name: "AI Transformation Imperative",
+                icon: "https://i.imgur.com/u39SJCk.png",
+                tagline: "Your business needs an urgent, practical foundation — start with governance, quick wins, and executive alignment.",
+                subtitle: ""
+            }
+        };
+
+        // Initialize Question Pages
+        function initializeQuestions() {
+            const container = document.getElementById('question-pages');
+            
+            questions.forEach((question, index) => {
+                const questionNum = index + 1;
+                const pageDiv = document.createElement('div');
+                pageDiv.id = `page-question-${questionNum}`;
+                pageDiv.className = 'page hidden';
+                
+                pageDiv.innerHTML = `
+                    <div class="header-banner">
+                        <h2 style="font-size: 1.5rem; font-weight: 700; color: white;">AI READINESS ASSESSMENT</h2>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="color: #2563eb; font-weight: 700; font-size: 1.125rem;">Question ${questionNum} of 10</span>
+                            <span style="color: #4b5563; font-size: 1.125rem;">${Math.round((questionNum / 10) * 100)}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${(questionNum / 10) * 100}%"></div>
+                        </div>
+                    </div>
+
+                    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">${question.title}</h2>
+
+                    <div id="options-${questionNum}">
+                        ${question.options.map(option => `
+                            <label class="question-option" data-question="${question.id}" data-points="${option.points}">
+                                <input type="radio" name="question-${question.id}" value="${option.value}">
+                                <span style="display: inline-block; vertical-align: top; width: calc(100% - 36px);">
+                                    <strong>${option.value}.</strong> ${option.text}
+                                </span>
+                            </label>
+                        `).join('')}
+                    </div>
+
+                    <div class="nav-buttons">
+                        ${questionNum > 1 ? `
+                            <button onclick="goToPage('question-${questionNum - 1}')" class="btn btn-secondary">
+                                ← Previous
+                            </button>
+                        ` : ''}
+                        ${questionNum < 10 ? `
+                            <button id="next-btn-${questionNum}" onclick="goToPage('question-${questionNum + 1}')" class="btn btn-primary" disabled style="margin-left: auto;">
+                                Next →
+                            </button>
+                        ` : `
+                            <button id="submit-btn" onclick="calculateScore()" class="btn btn-success" disabled style="margin-left: auto;">
+                                SUBMIT
+                            </button>
+                        `}
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                `;
+                
+                container.appendChild(pageDiv);
+            });
+
+            // Add event listeners to all options
+            document.querySelectorAll('.question-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionId = parseInt(this.dataset.question);
+                    const points = parseInt(this.dataset.points);
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Remove selected class from siblings
+                    this.parentElement.querySelectorAll('.question-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    
+                    // Store answer
+                    state.answers[questionId] = points;
+                    
+                    // Enable next/submit button
+                    if (questionId === 10) {
+                        document.getElementById('submit-btn').disabled = Object.keys(state.answers).length !== 10;
+                    } else {
+                        document.getElementById(`next-btn-${questionId}`).disabled = false;
+                    }
+                });
+            });
+        }
+
+        // Navigation
+        function goToPage(pageName) {
+            console.log('goToPage called with:', pageName);
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show requested page
+            const targetPage = document.getElementById(`page-${pageName}`);
+            console.log('Found element:', !!targetPage);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                state.currentPage = pageName;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                console.log('Page shown:', pageName);
+            } else {
+                console.error('Page element not found: page-' + pageName);
+            }
+        }
+
+        // Navigate to the appropriate tier characteristics page
+        
+        function resetPricingState() {
+            state.priceRevealed = false;
+            state.finalPriceRevealed = false;
+            setTimeout(() => {
+                const step1 = document.getElementById('price-step-1');
+                const step2 = document.getElementById('price-step-2');
+                const finalPrice = document.getElementById('final-price');
+                if (step1) step1.classList.remove('hidden');
+                if (step2) step2.classList.add('hidden');
+                if (finalPrice) finalPrice.classList.add('hidden');
+            }, 100);
+        }
+
+        function navigateToTierCharacteristics() {
+            console.log('navigateToTierCharacteristics called, tier:', state.tier);
+            const tierPages = {
+                'vanguard': 'tier1-vanguard-characteristics',
+                'architect': 'tier2-architect-characteristics',
+                'explorer': 'tier3-explorer-characteristics',
+                'imperative': 'tier4-imperative-characteristics'
+            };
+            const targetPage = tierPages[state.tier];
+            console.log('Target page:', targetPage);
+            if (targetPage) {
+                goToPage(targetPage);
+            } else {
+                console.error('No target page found for tier:', state.tier);
+            }
+        }
+
+        // Navigate within tier pages
+        function navigateTierPage(pageName) {
+            goToPage(pageName);
+        }
+
+        // Calculate Score
+        function calculateScore() {
+            let total = 0;
+            Object.values(state.answers).forEach(points => {
+                total += points;
+            });
+            state.score = total;
+            
+            // Determine tier
+            if (total >= 85) state.tier = 'vanguard';
+            else if (total >= 60) state.tier = 'architect';
+            else if (total >= 35) state.tier = 'explorer';
+            else state.tier = 'imperative';
+            
+            showResults();
+        }
+
+        // Show Results with Animation
+        function showResults() {
+            goToPage('results');
+            
+            // Animate score
+            let current = 0;
+            const increment = state.score / 50;
+            const circle = document.getElementById('score-progress');
+            const scoreDisplay = document.getElementById('animated-score');
+            const scoreText = document.getElementById('score-text');
+            const finalScoreSpan = document.getElementById('final-score');
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= state.score) {
+                    current = state.score;
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        scoreText.classList.remove('hidden');
+                        finalScoreSpan.textContent = state.score;
+                    }, 500);
+                }
+                
+                const rounded = Math.round(current);
+                scoreDisplay.textContent = rounded;
+                const circumference = 628.318530718;
+                const progress = (rounded / 100) * circumference;
+                circle.setAttribute('stroke-dasharray', `${progress} ${circumference}`);
+            }, 30);
+        }
+
+        // View Analysis
+        function viewAnalysis() {
+            const tier = state.tier;
+            const data = tierData[tier];
+            
+            const dynamicPages = document.getElementById('dynamic-pages');
+            dynamicPages.innerHTML = `
+                <div id="page-tier-1" class="page">
+                    <div class="header-banner">
+                        <h2 style="font-size: 1.5rem; font-weight: 700; color: white;">AI READINESS ASSESSMENT</h2>
+                        <p style="font-size: 1.25rem;">Your Analysis</p>
+                    </div>
+
+                    <h2 style="font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 1.5rem;">ACCORDING TO YOUR ANSWERS, YOUR COMPANY IS AN...</h2>
+
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                        <img src="${data.icon}" alt="${data.name}" style="width: 200px; height: 200px; object-fit: contain; border-radius: 0.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">${data.name}</h3>
+                        ${data.subtitle ? `<p style="font-size: 1.5rem; color: #1d4ed8; margin-bottom: 1.5rem;">${data.subtitle}</p>` : ''}
+                    </div>
+
+                    <div class="blue-box">
+                        <p style="font-size: 1.25rem; line-height: 1.75; font-weight: 600;">${data.tagline}</p>
+                    </div>
+
+                    <p style="font-size: 1.5rem; font-weight: 600; text-align: center; color: #1f2937; margin-bottom: 1.5rem;">Continue to see your detailed expert analysis</p>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('tier-1')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="navigateToTierCharacteristics()" class="btn btn-primary">
+                            View Your Characteristics →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- Part B Pages -->
+                
+
+                <div id="page-tier1-vanguard-characteristics" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 1: AI Vanguard — Elite AI Leaders</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">Your Characteristics</h2>
+<p style="font-size: 1.125rem; line-height: 1.3; margin-bottom: 0.75rem;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">🧑‍💻</span>Your score places you among the top companies already leveraging AI for significant gains with a clear roadmap, talent, and functional framework for Implementation &amp; Control</p>
+<p style="font-size: 1.125rem; line-height: 1.3; margin-bottom: 0.75rem;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">🧑‍💻</span>You're entering the most competitive phase: sustaining and maximising your lead whilst constantly refining Risk &amp; Governance strategies</p>
+<p style="font-size: 1.125rem; line-height: 1.3; margin-bottom: 0.75rem;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">🧑‍💻</span>Success requires seeking cutting-edge tailor-made advice</p>
+<p style="font-size: 1.125rem; line-height: 1.3; margin-bottom: 0.75rem;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">🧑‍💻</span>Your biggest risk: complacency allowing rapid AI advancements to erode your advantage</p>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('tier-1')">← Previous: Analysis</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier1-vanguard-nextsteps')">Next: Next Steps →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier1-vanguard-nextsteps" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 1: AI Vanguard — Elite AI Leaders</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">NEXT STEP</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">Move from Success to Dominance</h3>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">1</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Master advanced details ensuring every AI project yields maximum ROI — not just learn</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">2</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Focus on identifying nuanced AI use case justification and target operating models others miss</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">3</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Refine strategy through detailed, confidential advice</p>
+</div>
+</div>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier1-vanguard-characteristics')">← Previous: Characteristics</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier1-vanguard-solution')">Next: Solution →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier1-vanguard-solution" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 1: AI Vanguard — Elite AI Leaders</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">SOLUTION:</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">Master the 5X ROI!</h3>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">This workshop is your deep-dive into implementation and control.</h3>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Exclusive 1-on-1 Consultation</h3>
+<p>Book one of the 10 limited 30-minute consultation slots to receive tailor-made advice on your specific AI roadmap challenges.</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Advanced Prompt Engineering</h3>
+<p>Get 20+ sophisticated prompt structures and 1000+ keywords to push your current content generation and automation further than your competitors.</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>High-Level Strategy Refinement</h3>
+<p>Spend a full day drilling into AI Roadmap, maturity assessment, and risk governance to protect and expand your hard-earned lead.</p>
+</div>
+</div>
+<div class="cta-box">
+<h2 style="font-size: 1.75rem; margin-bottom: 1rem;">Protect Your Lead! Secure Your VIP Consultation Spot and Unlock the Special Early Bird Discount Now!</h2>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier1-vanguard-nextsteps')">← Previous: Next Steps</button>
+<button class="btn btn-primary" onclick="goToPage('partb-1')" style="color: white;">Next: Workshop Benefits →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier2-architect-characteristics" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 2: AI Execution Architect — Proactive Implementers</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">Your Characteristics</h2>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>Good base-level AI awareness, actively exploring automation and opportunities</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>Mid-range score suggests sporadic efforts relying on scattered information rather than structured step-by-step planning</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>Hitting roadblocks: complexity of rolling out solutions, struggling for consistent quality results from basic AI tools</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>Currently leaving measurable cost efficiency and sales productivity on the table</p>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('tier-1')">← Previous: Analysis</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier2-architect-nextsteps')">Next: Next Steps →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier2-architect-nextsteps" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 2: AI Execution Architect — Proactive Implementers</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">NEXT STEP</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">Implement a Guaranteed Blueprint</h3>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">1</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Stop trial-and-error: Adopt a proven, structured framework ensuring every AI investment translates directly into profit</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">2</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Identify AI Quick Win proposals using the Canvas model</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">3</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Learn to build AI agents and workflows for reliable automation</p>
+</div>
+</div>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier2-architect-characteristics')">← Previous: Characteristics</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier2-architect-solution')">Next: Solution →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier2-architect-solution" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 2: AI Execution Architect — Proactive Implementers</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">SOLUTION:</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">Get the Step-by-step Practical Blueprint</h3>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">The workshop is designed to turn your ambition into measurable results.</h3>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Develop Your Own AI Roadmap</h3>
+<p>Every participant will develop their own AI roadmap using the 10 steps &amp; design thinking approach.</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Get Ready-to-Use Tools</h3>
+<p>Walk away with a take-away AI roadmap, action plan, and framework that can be immediately deployed to your company.</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Practice for Profit</h3>
+<p>Get hands-on with prompt engineering practices and use real-world use cases specific to functions like Sales, HR, and Customer Service.</p>
+</div>
+</div>
+<div class="cta-box">
+<h2 style="font-size: 1.75rem; margin-bottom: 1rem;">Transform Ambition into Results! Reserve Your Spot and Unlock the Special Early Bird Discount Now!</h2>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier2-architect-nextsteps')">← Previous: Next Steps</button>
+<button class="btn btn-primary" onclick="goToPage('partb-1')" style="color: white;">Next: Workshop Benefits →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier3-explorer-characteristics" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 3: AI Explorer — Inquisitive Explorers</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">Your Characteristics</h2>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>Aware of AI's importance but lack strategy and talent to move forward decisively</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>Score suggests concern about risks and implementation complexity causing crucial investment delays</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>This hesitation is your most significant risk — competitors already integrating AI across Logistics, Manufacturing, and Finance</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>Without a structured plan, missing the chance to define your own target operating model</p>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('tier-1')">← Previous: Analysis</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier3-explorer-nextsteps')">Next: Next Steps →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier3-explorer-nextsteps" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 3: AI Explorer — Inquisitive Explorers</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">NEXT STEP</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">Mitigate Risk by Gaining Control</h3>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">1</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Gain control through knowledge and structured approach</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">2</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Understand core practices for landing AI solutions</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">3</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Learn to implement AI Governance to confidently mitigate risk</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">4</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Build confidence through structured framework and tailor-made advice</p>
+</div>
+</div>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier3-explorer-characteristics')">← Previous: Characteristics</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier3-explorer-solution')">Next: Solution →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier3-explorer-solution" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 3: AI Explorer — Inquisitive Explorers</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">SOLUTION:</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">Build a Confident, Risk-Aware Foundation</h3>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">This workshop is your risk-mitigation tool.</h3>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Focus on Quick Wins</h3>
+<p>Learn to use the Canvas model to identify AI Quick Win proposals that provide immediate, measurable ROI without massive investment.</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Function-by-Function Transformation</h3>
+<p>Get a chance to drill into details on how AI can transform your business model by functions, giving you tangible starting points for your industry.</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Understand Governance</h3>
+<p>Get a detailed understanding of AI Risk, Governance &amp; Incidents occurred so you can move past fear.</p>
+</div>
+</div>
+<div class="cta-box">
+<h2 style="font-size: 1.75rem; margin-bottom: 1rem;">Start Your AI Journey Confidently! Secure Your Spot and Unlock the Special Early Bird Discount Now!</h2>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier3-explorer-nextsteps')">← Previous: Next Steps</button>
+<button class="btn btn-primary" onclick="goToPage('partb-1')" style="color: white;">Next: Workshop Benefits →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier4-imperative-characteristics" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 4: AI Transformation Imperative — Urgent Transformation</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">Your Characteristics</h2>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>Core processes likely manual or relying on traditional technology</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>Either avoiding external consultation or waiting for a 'perfect solution' — a massive liability</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>No formal AI strategy or long-term plan = losing potential profits daily in every functional area (HR to Customer Services)</p>
+<p style="font-size: 1.125rem; line-height: 1.4;"><span style="color: #2563eb; font-size: 1.5rem; margin-right: 0.75rem; vertical-align: middle;">👤</span>This is not a technology problem; it's a survival problem</p>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('tier-1')">← Previous: Analysis</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier4-imperative-nextsteps')">Next: Next Steps →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier4-imperative-nextsteps" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 4: AI Transformation Imperative — Urgent Transformation</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">NEXT STEP</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">Secure Your Company's Future Now!</h3>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">1</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Stop relying on traditional methods for cost-saving and sales productivity</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">2</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Need comprehensive, structured immersion into fundamental AI strategy principles</p>
+</div>
+</div>
+<div class="blue-box" style="margin-bottom: 0.75rem; display: flex; align-items: flex-start;">
+<span style="font-size: 3rem; font-weight: 700; color: #16a34a; width: 4rem; text-align: center;">3</span>
+<div>
+<p style="font-size: 1.125rem; line-height: 1.4;">Get the step-by-step plan and design thinking approach to define AI priorities immediately</p>
+</div>
+</div>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier4-imperative-characteristics')">← Previous: Characteristics</button>
+<button class="btn btn-primary" onclick="navigateTierPage('tier4-imperative-solution')">Next: Solution →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-tier4-imperative-solution" class="page hidden">
+                    <div class="container">
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Tier 4: AI Transformation Imperative — Urgent Transformation</p>
+</div>
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">SOLUTION:</h2>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">The Complete Blueprint for Survival and Growth</h3>
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem;">This workshop is your one-day intensive AI strategy MBA.</h3>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Receive the Full Step-by-Step Blueprint</h3>
+<p>You'll walk away with a take-away AI roadmap, action plan and framework to implement immediately, giving you a year's worth of strategy in a day.</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>See Real-World Demos</h3>
+<p>Bring your real-world use cases and see demos and chances for practising the prompt engineering for immediate wins.</p>
+</div>
+<div class="benefit-card">
+<h3><span style="color: #f59e0b; font-size: 1.75rem; margin-right: 0.5rem; vertical-align: middle;">🏆</span>Identify Your First Quick Wins</h3>
+<p>Learn to use the Canvas model to identify AI Quick Win proposals to generate measurable wins that justify further investment.</p>
+</div>
+</div>
+<div class="cta-box">
+<h2 style="font-size: 1.75rem; margin-bottom: 1rem;">The Time to Act is NOW! Your Future Depends on It! Reserve Your Spot and Lock in Your Special Discount Today!</h2>
+</div>
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="navigateTierPage('tier4-imperative-nextsteps')">← Previous: Next Steps</button>
+<button class="btn btn-primary" onclick="goToPage('partb-1')" style="color: white;">Next: Workshop Benefits →</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-enrollment" class="page hidden">
+                    <div class="container">
+
+
+<div class="header-banner">
+<h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: #93c5fd;">AI Readiness Assessment</h1>
+<p style="font-size: 1.25rem; opacity: 0.95;">Workshop Enrollment Form</p>
+</div>
+
+<div style="margin-bottom: 1rem;">
+<h2 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">Enroll in Our AI Transformation Workshop</h2>
+<div class="intro-text">
+<p style="font-size: 1.125rem; line-height: 1.4; margin-bottom: 1rem; font-style: italic;">
+<strong>Congratulations on completing your AI Readiness Assessment!</strong>
+</p>
+<p style="font-size: 1.125rem; line-height: 1.4;">
+                    You've taken the first step toward AI transformation. Now, secure your spot in our exclusive workshop designed specifically for your tier level. Fill out the form below to reserve your place and unlock your early bird discount.
+                </p>
+</div>
+</div>
+
+<div class="form-container">
+<h3 style="font-size: 1.5rem; font-weight: 600; color: #2563eb; margin-bottom: 1.5rem; text-align: center;">Enrolment Form</h3>
+<div style="background: white; padding: 0; margin-bottom: 1rem; font-size: 0.95rem; color: #374151; line-height: 1.3; font-style: italic;">
+<p style="margin-bottom: 0.25rem;">• Fill out all required fields</p>
+<p>• Your early bird VIP special offer is valid for 48 hours after you fill in this Enrolment Form.</p>
+</div>
+<!-- REPLACE THIS IFRAME SRC WITH YOUR ACTUAL GOOGLE FORM EMBED URL -->
+<iframe frameborder="0" height="3053" marginheight="0" marginwidth="0" src="https://docs.google.com/forms/d/e/1FAIpQLSexWjOff5J_7R4ENTyllTUDClNGN0EHdkAKrlvANwh40J922w/viewform?embedded=true" width="100%">
+                Loading…
+            </iframe>
+<!-- Uncomment below and comment out the iframe above if needed -->
+<!--
+            <div style="text-align: center; padding: 3rem;">
+                <p style="font-size: 1.25rem; margin-bottom: 1rem; color: #475569;">
+                    Click the button below to access our enrollment form:
+                </p>
+                <a href="https://docs.google.com/forms/YOUR_FORM_LINK" 
+                   target="_blank" 
+                   style="display: inline-block; padding: 1.25rem 3rem; background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); color: white; text-decoration: none; border-radius: 0.75rem; font-size: 1.25rem; font-weight: 700; transition: all 0.3s;">
+                    Open Enrollment Form →
+                </a>
+            </div>
+            -->
+</div>
+
+<div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 1.25rem; border-radius: 0.75rem; text-align: center; margin-bottom: 1rem;">
+<h3 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; color: white;">Thank You!</h3>
+<p style="font-size: 1.25rem; opacity: 0.95;">See you at the Workshop! 🎉</p>
+</div>
+
+<div class="nav-buttons">
+<button class="btn btn-secondary" onclick="goToPage('results')">← Back to Results</button>
+</div>
+
+                    </div>
+                </div>
+
+                <div id="page-partb-1" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI Transformation Step-by-Step Plan:</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">A Practical Blueprint for Doubling Business Profits</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">(Cantonese Workshop)</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">Unique Workshop Benefits</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 0.5rem;">Quantifiable Results and Strategic Control</p>
+                    <p style="font-size: 1.25rem; text-align: center; color: #4b5563; margin-bottom: 1rem;">Transform Your Business with AI in Just One Day</p>
+
+                    <div class="blue-box">
+                        <p style="font-size: 1.25rem; line-height: 1.75;">
+                            As a senior leader, you require tangible results. This workshop is designed to deliver immediate impact by focusing on two core areas: <strong>Sales & Productivity</strong> and <strong>Cost Efficiency</strong>.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <div class="feature-box" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-color: #2563eb;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.75rem;">✓✓ Define Your Company's Practical AI Roadmap</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">Participants will personally define their company's practical AI Roadmap, thus gaining strategic control over the next 12-24 months of transformation. Leave with a customised implementation plan specifically designed for your industry and company size, complete with prioritised quick wins and long-term initiatives.</em></p>
+                        </div>
+
+                        <div class="feature-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: #16a34a;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #15803d; margin-bottom: 0.75rem;">✓✓ Ready-to-Deploy AI Framework</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">Obtain a ready-to-deploy AI framework and a plan to ensure the successful landing of AI solutions within your organisation, thereby reducing risk and accelerating deployment. Walk away with actionable tools you can implement immediately.</em></p>
+                        </div>
+
+                        <div class="feature-box" style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-color: #9333ea;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #6b21a8; margin-bottom: 0.75rem;">✓✓ Hands-On AI Tools & Prompt Engineering</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">Get practical experience with leading AI platforms including ChatGPT, Claude, and industry-specific tools. Learn advanced prompt engineering techniques with 20+ structures and 1000+ keywords that deliver professional results immediately.</em></p>
+                        </div>
+
+                        <div class="feature-box" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #9a3412; margin-bottom: 0.75rem;">✓✓ Limited One-on-One Consultation (10 Slots Only)</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">The limited one-on-one consultation offers tailor-made strategic advice for your investment, accelerating transformation and reducing risk. Gain access to our AI strategy experts for personalised guidance on your specific challenges.</em></p>
+                        </div>
+
+                        <div class="feature-box" style="background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-color: #ca8a04;">
+                            <h4 style="font-size: 1.25rem; font-weight: 700; color: #854d0e; margin-bottom: 0.75rem;">✓✓ ROI Calculator & Measurement Framework</h4>
+                            <p style="font-size: 1.125rem; color: #374151;">Receive our proprietary AI ROI calculator and measurement framework to quantify the impact of your AI initiatives and demonstrate value to stakeholders. Build compelling business cases for AI projects.</em></p>
+                        </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('results')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="goToPage('partb-2')" class="btn btn-primary">
+                            Next - Expected Outcomes →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <div id="page-partb-2" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI Transformation Step-by-Step Plan:</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">A Practical Blueprint for Doubling Business Profits</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">(Cantonese Workshop)</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">Expected Outcomes</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 1rem;">What You'll Achieve After This Workshop</p>
+
+                    <div style="background: #eff6ff; border: 2px solid #93c5fd; padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 1rem;">
+                        <p style="text-align: center; font-size: 1.25rem; font-weight: 600; color: #1e3a8a;">After completing this workshop, you will be able to:</p>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #3b82f6; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Strategic Clarity</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">Gain detailed insight into how AI can transform your business model by function, and identify 3-5 high-impact AI use cases for your business.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #10b981; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Ready-to-Use Toolkit</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">Walk away with a complete AI roadmap, action plan, and framework that can be immediately deployed to your company with prioritised initiatives.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #a855f7; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Tailored AI Blueprint</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">Develop your own AI Roadmap using the Step-by-Step & Design Thinking approaches to immediately identify transformation priorities.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #f97316; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Prompt Engineering Mastery</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">Acquire 20+ prompt structures and 1000+ keywords list, with practices and demos on prompt engineering for real-world use cases to create effective professional AI-generated content.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #eab308; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">AI Governance & Risk Management</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">Establish AI Governance guidelines and risk management protocols to confidently deploy AI solutions.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: start; gap: 1rem; background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #6366f1; margin-bottom: 1.25rem;">
+                            <span style="font-size: 1.75rem;">✓✓</span>
+                            <div>
+                                <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Build Business Cases</p>
+                                <p style="font-size: 1.125rem; color: #1f2937;">Build compelling business cases for AI projects and develop internal AI capabilities and team structures.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fef9c3 0%, #fed7aa 100%); border-left: 4px solid #eab308; padding: 1.5rem; border-radius: 0 0.75rem 0.75rem 0;">
+                        <p style="font-size: 1.25rem; font-weight: 700; color: #1f2937;">💡 Result: You'll leave with actionable plans, not just theory.</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('partb-1')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="goToPage('workshop-contents')" class="btn btn-primary">
+                            Next - Workshop Contents →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: Workshop Contents -->
+                <div id="page-workshop-contents" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI Transformation Step-by-Step Plan:</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">A Practical Blueprint for Doubling Business Profits</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">(Cantonese Workshop)</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">Workshop Contents</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 1rem;">Full-Day Intensive Programme</p>
+
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #2563eb; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem; text-align: center;">Key Strategic Topics - Workshop Contents / Agenda:</h3>
+                        <p style="font-size: 1.5rem; font-weight: 600; color: #1e3a8a; text-align: center; margin-bottom: 1rem;">The AI Transformation 10-Step Plan</p>
+                        <p style="font-size: 1.125rem; color: #4b5563; text-align: center;"></p>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">PART I: Strategic Planning & Assessment</h3>
+                        <p style="font-size: 1.125rem; color: #4b5563; margin-bottom: 1rem; font-style: italic;"></p>
+                        
+                        <ul style="list-style: none; padding-left: 1rem;">
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">1</span>
+                                AI Roadmap and Maturity Assessment
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">2</span>
+                                AI Use Case Justification and Target Operating Model
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">3</span>
+                                Use of the Canvas Model to identify AI Quick Win proposals
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">4</span>
+                                How to Build AI Agents and workflow for automation
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">5</span>
+                                Understand AI Risk, Governance & Incidents occurred
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">PART II: Industry Application Deep Dive (with cases)</h3>
+                        <p style="font-size: 1.125rem; color: #4b5563; margin-bottom: 1rem; font-style: italic;"></p>
+                        
+                        <ul style="list-style: none; padding-left: 1rem;">
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">6</span>
+                                Retail & Trading - Sales & Marketing
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">7</span>
+                                Financial & Investment Services
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">8</span>
+                                Human Resource, Legal & Compliance
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">9</span>
+                                Customer Services
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="display: inline-block; width: 2rem; height: 2rem; background: #2563eb; color: white; border-radius: 50%; text-align: center; line-height: 2rem; font-weight: 700; margin-right: 0.75rem;">10</span>
+                                Logistics, Manufacturing & Operation
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #10b981; text-align: center;">
+                        <p style="font-size: 1.25rem; font-weight: 700; color: #065f46; margin-bottom: 0.5rem;">🎯 Full-Day Intensive Workshop</p><p style="font-size: 1.125rem; font-weight: 600; color: #065f46;">9:30 AM - 6:00 PM</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('partb-2')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="goToPage('testimonials')" class="btn btn-primary">
+                            Next - See Testimonials →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: Testimonials -->
+                <div id="page-testimonials" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI Transformation Step-by-Step Plan:</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">A Practical Blueprint for Doubling Business Profits</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">(Cantonese Workshop)</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">Testimonials</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 0.5rem;">Hear From Our Successful Participants</p>
+<p style="font-size: 0.875rem; color: #6b7280; text-align: left; margin-bottom: 1rem; margin-top: 0.5rem;">Original testimonials were in Chinese, English translation shown below.</p>
+
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 1.5rem; border-radius: 0.75rem; border: 3px solid #f59e0b; margin-bottom: 3rem; text-align: center;">
+                        <div style="text-align: center; font-size: 2.5rem; margin-bottom: 0.75rem;">⭐⭐⭐⭐⭐</div>
+                        <p style="font-size: 1.25rem; font-weight: 700; color: #92400e;">Average Rating for Ben Sir: 4.73 from 250+ participants</p>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">Peter Auyeung, Company Director</h3>
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"Ben Sir's course changed my view on AI. Many other courses only teach which AI tools to use, but he teaches the Canvas Model and strategic thinking, which you simply won't easily find elsewhere. This approach is invaluable for a company director looking for more than just technical tips."</em></p>
+                        
+                            <img src="https://i.imgur.com/8j4BkE3.png" alt="Peter Auyeung signature" style="height: 2rem; margin-top: 0.5rem;"></div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">Alice Wong, HR Manager</h3>
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"The workshop's interactivity was outstanding! The group discussions and practical exercises were superb. I particularly loved how he applied AI to the Human Resources department and other functions. Ben Sir is a lively speaker, explaining complex theories so clearly that the knowledge can be immediately taken back to the company and implemented."</em></p>
+                        
+                            <img src="https://i.imgur.com/4wsy9N8.png" alt="Alice Wong signature" style="height: 2rem; margin-top: 0.5rem;"></div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">David Lee, Director</h3>
+                            
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"What I care about most is how Logistics and Operations can save costs. The case studies on AI Agents and automated workflows helped me clearly see how AI can save us a huge amount of money without affecting quality. This provided me with a clear, implementable plan for achieving significant cost efficiency."</em></p>
+                        
+                            <img src="https://i.imgur.com/kJY97sg.png" alt="David Lee signature" style="height: 2rem; margin-top: 0.5rem;"></div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">C K Kwok, Manager</h3>
+                            
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"…He guided us on how to personally set up the company's AI practical roadmap. This top-down strategic thinking is something you can't find in books or online resources. Now, I not only see the path for the next year or two but also hold a tool for continuous evaluation, genuinely allowing us to take back control of our transformation."</em></p>
+                        </div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">Helen Mo, Shop Owner</h3>
+                            
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"After one day of learning, I gained a new and clear understanding of the potential for AI in action plans, logistics, operations, customer service, and other functions. This blueprint makes me absolutely sure we are ready for the next phase of growth and can implement AI across our entire value chain."</em></p>
+                            <img src="https://i.imgur.com/oewXZYY.png" alt="Helen Mo signature" style="height: 2rem; margin-top: 0.5rem;">
+                        </div>
+
+                        <div style="background: white; padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">Cynthia Lam, Head of CS</h3>
+                            
+                            <p style="font-size: 1.125rem; line-height: 1.4; color: #374151;"><em>"AI is not just a chatbot; it can completely automate the entire Customer Service system. After one day in the class, I learned the future direction and trends for customer service. This course provided a complete vision for how to transform our entire service model."</em></p>
+                        
+                            <img src="https://i.imgur.com/AcSzjHP.png" alt="Cynthia Lam signature" style="height: 2rem; margin-top: 0.5rem;">
+                            </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('workshop-contents')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="goToPage('workshop-details')" class="btn btn-primary">
+                            Next - Workshop Details →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: Workshop Details -->
+                <div id="page-workshop-details" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI Transformation Step-by-Step Plan:</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">A Practical Blueprint for Doubling Business Profits</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">(Cantonese Workshop)</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">Workshop Details</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 1rem;">Logistics & Practical Information</p>
+
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #2563eb; margin-bottom: 2.5rem; text-align: center;">
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">Instructor 主講者</h3>
+                        <img src="https://i.imgur.com/TDGIbwd.png" alt="Ben Sir" style="width: 160px; height: 160px; border-radius: 50%; object-fit: cover; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); margin: 1.5rem auto; display: block;">
+                        <h4 style="font-size: 1.5rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">BEN Sir, MSc</h4>
+                        <p style="font-size: 1.125rem; color: #374151;">Programme Director, Design Thinking, Change Management & AI Principal Consultant</p>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem;">Some Relevant Qualifications </h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                Certificate of Leadership in Digitalisation, Data and Transformation of HAAS Business School, UC Berkeley, USA
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                Certificate in PROSCI Transformation Management, USA
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                MBA lecturer for Sunderland University, UK
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                Speaker for Hong Kong Institute of Directors
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                Lecturer at Hong Kong Baptist University (IT Division)
+                            </li>
+                            <li style="margin-bottom: 0.25rem; font-size: 1.125rem; line-height: 1.3;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                Lecturer at Hong Kong City University
+                            </li>
+                            <li style="font-size: 1.125rem; line-height: 1.75;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                Invited as a Consultant/Speaker in major China, Hong Kong and International companies
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; margin-bottom: 2.5rem;">
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">📅 Date & Time</h4>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>Date:</strong> 2025.11.28 (tbc)</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>Time:</strong> 0930 - 1800</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 1.5rem;"><strong>Next Available:</strong> Contact us for upcoming dates</p>
+                        
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; margin-top: 1.5rem;">📍 Location</h4>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>Venue:</strong> Tsim Sha Tsui (tbc)</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 1.5rem;"><strong>Design:</strong> In-person workshop with hands-on training</p>
+                        
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; margin-top: 1.5rem;">👥 Class Size & Format</h4>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>Maximum Participants:</strong> 16 (ensuring personalised attention)</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>Learning Style:</strong> Interactive workshops, group exercises, hands-on practice</p>
+                        <p style="font-size: 1.125rem; margin-bottom: 1.5rem;"><strong>Language:</strong> Cantonese (with English notes)</p>
+                        
+                        <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; margin-top: 1.5rem;">💻 Technical Requirements</h4>
+                        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;"><strong>Prerequisites:</strong> No technical background required</p>
+                        <p style="font-size: 1.125rem;"><strong>Bring Your Own:</strong> Laptop (Windows or Mac)</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('testimonials')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="goToPage('organiser-message')" class="btn btn-primary">
+                            Next - Message from Organiser →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: Message from Organiser -->
+                <div id="page-organiser-message" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI Transformation Step-by-Step Plan:</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">A Practical Blueprint for Doubling Business Profits</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">(Cantonese Workshop)</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">Message from the Organiser</h2>
+                    
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                        <img src="https://i.imgur.com/9aPGrEP.jpeg" alt="Learn Achiever" style="width: 200px; height: auto; border-radius: 0; box-shadow: none; margin: 1.5rem auto; display: block;">
+                        <p style="font-size: 1.25rem; color: #374151; font-weight: 600;">Learn Achiever Ltd. - Your Partner in AI Transformation</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #f59e0b; margin-bottom: 1rem; text-align: center;">
+                        <h3 style="font-size: 1.875rem; font-weight: 700; color: #92400e;">An Exclusive Invitation:</h3>
+                        <p style="font-size: 1.5rem; font-weight: 600; color: #92400e;">You and Your Company's VIP Access to the AI Transformation Blueprint</p>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1rem;"><strong><strong>Dear Business Leader,</strong></strong></p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">You've completed our AI Readiness Assessment, and now you hold the key to your company's future growth.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">I want to personally commend <strong>Ben Sir (Mr Ben Wong)</strong>, our esteemed Data Analytics, Change Management, Design Thinking and AI Principal Consultant. At Learn Achiever, we've witnessed firsthand the transformative power of AI across hundreds of organisations.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">The one-day workshop is meticulously designed, seamlessly blending high-level strategic theory (like the Canvas Model and the Step-by-step AI Roadmap) with highly interactive, small-group practices. This is precisely why past attendees consistently rave about how immediately applicable the knowledge is to their workplace.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">Our mission is simple: to democratise AI knowledge and make cutting-edge technology accessible to businesses of all sizes. Whether you're an AI Vanguard looking to scale your initiatives or just beginning your AI transformation journey, we're here to guide you every step of the way.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">This workshop represents years of real-world experience, distilled into one intensive day of practical, actionable learning. We don't just teach theory - we focus on what actually works based on proven results from companies like yours.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">Our commitment extends beyond the workshop. We're building a community of forward-thinking leaders who are shaping the future of business with AI. When you join us, you're not just attending a workshop - you're joining a movement.</p>
+                        
+                        <div style="background: #fef9c3; border: 2px solid #9ca3af; padding: 1.5rem; border-radius: 0.5rem; margin: 2rem 0;">
+                            <p style="font-size: 1.25rem; font-weight: 700; color: #92400e; text-align: center;">⏰ Your AI transformation cannot wait. Secure your seat now.</p>
+                            <p style="font-size: 1.125rem; color: #92400e; text-align: center; margin-top: 0.5rem;">Please enrol within the next three days to claim a very special VVIP rate.</em></p>
+                        </div>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1rem;">Thank you for your support. We look forward to welcoming you.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 0.5rem;">Warmest regards,</p>
+                        
+                        <img src="https://i.imgur.com/flmhqRz.png" alt="Dr Yim signature" style="height: 60px; margin: 1rem 0;">
+                        
+                        <div style="margin: 1rem 0;">
+                            <p style="font-size: 1.125rem; font-weight: 700; color: #1e3a8a;">Dr. Yim, D.Litt., MSc, FHKUM, ProM</p>
+                            <p style="font-size: 1rem; color: #6b7280;">Learn Achiever Ltd. / Organiser</p>
+                        </div>
+                        
+                        <p style="font-size: 1.125rem; color: #374151; font-weight: 600;">Contact: WhatsApp: +852 9528 6898</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('workshop-details')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="goToPage('director-message')" class="btn btn-primary">
+                            Next - Message from Course Director →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: Message from Programme Director -->
+                <div id="page-director-message" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI Transformation Step-by-Step Plan:</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">A Practical Blueprint for Doubling Business Profits</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">(Cantonese Workshop)</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Message from the Programme Director</h2>
+                        <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 1.5rem; border-radius: 0.75rem; border: 3px solid #f59e0b; display: inline-block;">
+                            <p style="font-size: 1.875rem; font-weight: 700; color: #92400e;">Stop Wasting Time, Start Winning with AI Strategy</p>
+                        </div>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1rem;"><strong>Dear Future AI Leader,</strong></p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">Over the past few years, I've had the privilege of helping over 50 organisations navigate their AI transformation journeys. From Fortune 500 companies to ambitious start-ups, I've seen what works and what doesn't.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;"><strong>The biggest lesson I've learnt?</strong> AI success isn't about having the most advanced technology or the biggest budget. It's about having the right strategy, the right mindset, and the courage to start.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">I designed the "Step-by-step AI Transformation" workshop specifically for leaders like you—busy executives who need results, not fluff.</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.25rem; border-radius: 0.75rem; border: 2px solid #2563eb; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem;">Why This Workshop Is Different:</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.15rem; font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>Over 2,000 hours of research</strong> distilled into top-tier principles
+                            </li>
+                            <li style="margin-bottom: 0.15rem; font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>Strategic yet practical</strong> - balanced approach for immediate implementation
+                            </li>
+                            <li style="margin-bottom: 0.15rem; font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>No fluff, no theory</strong> - only actionable insights that work
+                            </li>
+                            <li style="margin-bottom: 0.15rem; font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>Real-world examples</strong> from companies that doubled efficiency
+                            </li>
+                            <li style="font-size: 1.125rem; line-height: 1.2;">
+                                <span style="color: #2563eb; font-weight: 700; margin-right: 0.5rem;">🎓</span>
+                                <strong>Practical frameworks</strong> you can implement immediately
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1.5rem;">I know your time is your most valuable asset. You cannot afford to spend months reading complex papers or testing every new AI tool. That's why I've done the hard work for you.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">In just one intensive day, you'll gain the right mindset and the right tools. This course will instantly cut through the noise, saving you countless hours of trial-and-error in your office.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">I've personally witnessed companies <strong>double their efficiency, reduce costs by 40%, and unlock entirely new business models</strong> through strategic AI adoption. But more importantly, I've seen leaders like you gain the confidence to lead their organisations into the AI era.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1.5rem;">Whether you scored as an AI Vanguard or identified as needing urgent transformation, remember this: <strong>every successful AI journey started with a single step.</strong> This workshop can be that step for you.</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #10b981; margin-bottom: 1rem; text-align: center;">
+                        <p style="font-size: 1.25rem; font-weight: 700; color: #065f46; margin-bottom: 1rem;">This is your chance to step off the sidelines and into a clear, profitable future.</p>
+                        <p style="font-size: 1.125rem; color: #065f46;">Join us and grab this intensive course, along with the invaluable one-to-one on-site consultation services (a benefit reserved only for a select few).</p>
+                    </div>
+
+                    <div style="background: white; padding: 0; margin-bottom: 1rem;">
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 1rem;">I look forward to working with you and helping you unlock the transformative power of AI for your organisation. Let's transform your company's future together.</p>
+                        
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; font-style: italic; color: #374151; margin-bottom: 1rem;">To your success,</p>
+                        <p style="font-size: 1.125rem; line-height: 1.3; font-style: italic; color: #374151; margin-bottom: 0.5rem;">Your AI Strategy Consultant</p>
+                        
+                        <img src="https://i.imgur.com/FiHJ3By.png" alt="Ben Sir signature" style="height: 60px; margin: 1rem 0;">
+                        
+                        <div style="margin: 1rem 0;">
+                            <p style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a;">BEN Sir</p>
+                            <p style="font-size: 1rem; color: #6b7280;">Programme Director, Design Thinking, Change Management & AI Principal Consultant</p>
+                            <p style="font-size: 1rem; color: #6b7280;">Data Analytics, Change Management, Design Thinking and AI Principal Consultant</p>
+                        </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('organiser-message')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="goToPage('investment')" class="btn btn-primary">
+                            Next - Your Investment →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <!-- NEW PAGE: Your Investment -->
+                <div id="page-investment" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI Transformation Step-by-Step Plan:</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">A Practical Blueprint for Doubling Business Profits</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">(Cantonese Workshop)</p>
+                    </div>
+
+                    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">Your Investment</h2>
+                    <p style="font-size: 1.5rem; text-align: center; color: #374151; margin-bottom: 1rem;">Understanding the Value</p>
+
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 1.25rem; border-radius: 1rem; border: 3px solid #2563eb; margin-bottom: 1rem; text-align: center;">
+                        <h3 style="font-size: 2rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem;">Standard Workshop Fee</h3>
+                        <p style="font-size: 3rem; font-weight: 700; color: #dc2626; text-decoration: line-through;">HK$14,800</p>
+                        <p style="font-size: 1.125rem; color: #6b7280;">per participant</p>
+                    </div>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <h3 style="font-size: 1.875rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1.5rem; text-align: center;">What Your Investment Includes:</h3>
+                        
+                        <div style="background: white; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #e5e7eb; margin-bottom: 1.5rem;">
+                            <div style="display: flex; align-items: start; margin-bottom: 1rem;">
+                                <div style="flex-shrink: 0; width: 48px; height: 48px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="color: white; font-size: 1.5rem; font-weight: 700;">1</span>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem;">Full-Day Intensive Workshop</h4>
+                                    <p style="font-size: 1.125rem; color: #374151; margin-bottom: 0.25rem;">7.5 hours of expert-led training and hands-on practice</p>
+                                    <p style="font-size: 1rem; color: #16a34a; font-weight: 700;">Value: HK$7,500</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start; margin-bottom: 1rem;">
+                                <div style="flex-shrink: 0; width: 48px; height: 48px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="color: white; font-size: 1.5rem; font-weight: 700;">2</span>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem;">One-to-one AI Strategy Roadmap</h4>
+                                    <p style="font-size: 1.125rem; color: #374151; margin-bottom: 0.25rem;">Visit to your company to help you implement your AI plan</p>
+                                    <p style="font-size: 1rem; color: #16a34a; font-weight: 700;">Value: HK$3,500</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start; margin-bottom: 1rem;">
+                                <div style="flex-shrink: 0; width: 48px; height: 48px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="color: white; font-size: 1.5rem; font-weight: 700;">3</span>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem;">Comprehensive Toolkit & Resources</h4>
+                                    <p style="font-size: 1.125rem; color: #374151; margin-bottom: 0.25rem;">ROI calculator, templates, and exclusive AI resources</p>
+                                    <p style="font-size: 1rem; color: #16a34a; font-weight: 700;">Value: HK$2,000</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start;">
+                                <div style="flex-shrink: 0; width: 48px; height: 48px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="color: white; font-size: 1.5rem; font-weight: 700;">4</span>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.25rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem;">30-Day Post-Workshop Support</h4>
+                                    <p style="font-size: 1.125rem; color: #374151; margin-bottom: 0.25rem;">Email consultation and implementation guidance</p>
+                                    <p style="font-size: 1rem; color: #16a34a; font-weight: 700;">Value: HK$1,800</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); padding: 1.5rem; border-radius: 0.75rem; border: 3px solid #10b981; margin-top: 2rem; text-align: center;">
+                            <p style="font-size: 1.5rem; font-weight: 700; color: #065f46;">Total Value: HK$14,800</em></p>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 1rem; border-radius: 1rem; border: 3px solid #9ca3af; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.75rem; font-weight: 700; color: #92400e; margin-bottom: 1rem; text-align: center;">Why This Investment Makes Sense:</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.5rem; font-size: 1.125rem; line-height: 1.3; color: #374151;">
+                                <span style="font-size: 1.5rem; margin-right: 0.5rem;">💡</span>
+                                <strong>Average ROI:</strong> 80-200% within the first year of AI implementation
+                            </li>
+                            <li style="margin-bottom: 0.5rem; font-size: 1.125rem; line-height: 1.3; color: #374151;">
+                                <span style="font-size: 1.5rem; margin-right: 0.5rem;">💡</span>
+                                <strong>Cost of doing nothing:</strong> Competitors gaining 40% efficiency advantages
+                            </li>
+                            <li style="font-size: 1.125rem; line-height: 1.3; color: #374151;">
+                                <span style="font-size: 1.5rem; margin-right: 0.5rem;">💡</span>
+                                <strong>One successful AI initiative</strong> typically saves 10x the workshop cost
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('director-message')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="resetPricingState(); setTimeout(() => goToPage('partb-3'), 50);" class="btn btn-primary">
+                            Next - Special Offer →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+
+                <div id="page-partb-3" class="page hidden">
+                    <div class="header-banner" style="padding: 2.5rem 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">AI Transformation Step-by-Step Plan:</h2>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem;">A Practical Blueprint for Doubling Business Profits</h3>
+                        <p style="font-size: 1.375rem; color: #93c5fd; font-weight: 600;"></p>
+                        <p style="font-size: 1rem; margin-top: 0.75rem; color: #93c5fd; font-weight: 600;">(Cantonese Workshop)</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                        <div style="display: inline-block; background: #dc2626; color: white; padding: 0.75rem 2rem; border-radius: 9999px; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;" class="animate-pulse">
+                            LIMITED TIME OFFER
+                        </div>
+                        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Special Invitation Early Bird Price</h2>
+                        <p style="font-size: 1.5rem; color: #374151;">For Assessment Participants Only</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); padding: 1.25rem; border-radius: 1rem; border: 4px solid #10b981; margin-bottom: 1rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                        <div style="text-align: center; margin-bottom: 1.5rem;">
+                            <p style="color: #4b5563; font-size: 1.5rem; margin-bottom: 0.5rem; text-decoration: line-through;">❌ Regular Price: HK$14,800</p>
+                            <p style="color: #4b5563; font-size: 1.5rem; margin-bottom: 1rem; text-decoration: line-through;">❌ Special Offer: HK$9,800</p>
+                            <p style="color: #4b5563; font-size: 1.25rem; margin-bottom: 1rem; text-decoration: line-through;">❌ You Save: HK$5,000 (34% OFF)</p>
+
+                            <div id="price-step-1" style="margin: 2rem 0;">
+                                <p style="font-size: 1.875rem; font-weight: 700; color: #dc2626; margin-bottom: 1.5rem;">Wait — You are NOT paying this price!</p>
+                                <button onclick="revealPrice1()" class="btn animate-pulse" style="background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); color: white; font-size: 1.5rem; padding: 1.5rem 3rem;">
+                                    Click to See YOUR PERSONAL OFFER TODAY!
+                                </button>
+                            </div>
+
+                            <div id="price-step-2" class="hidden" style="margin: 2rem 0;">
+                                <div style="position: relative; margin-bottom: 1.5rem;">
+                                    <div style="font-size: 5rem; font-weight: 700; color: #2563eb; animation: bounce 1s infinite;">
+                                        $2,800
+                                    </div>
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(12deg); font-size: 6rem; font-weight: 700; color: #dc2626; opacity: 0.5;">
+                                        ❌
+                                    </div>
+                                </div>
+                                <p style="font-size: 1.875rem; font-weight: 700; color: #dc2626; margin: 1.5rem 0;">Wait — You are STILL NOT paying this!</p>
+                                <button onclick="revealFinalPrice()" class="btn animate-pulse" style="background: linear-gradient(135deg, #16a34a 0%, #059669 100%); color: white; font-size: 1.5rem; padding: 1.5rem 3rem;">
+                                    Reveal Final Price - Enrol TODAY!
+                                </button>
+                            </div>
+
+                            <div id="final-price" class="hidden" style="margin: 2rem 0;">
+                                <div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); padding: 1.25rem; border-radius: 1rem; margin-bottom: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                                    <p style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">If you enrol and pay TODAY, enjoy an extra $500 cut!</p>
+                                    <div style="font-size: 5rem; font-weight: 700; color: #15803d; margin-bottom: 1rem;">
+                                        HK$2,300
+                                    </div>
+                                    <p style="font-size: 1.875rem; font-weight: 700; color: #1f2937;">ONLY!</p>
+                                </div>
+                                <div style="background: white; padding: 1.5rem; border-radius: 0.75rem; border: 4px solid #16a34a;">
+                                    <p style="font-size: 1.5rem; font-weight: 700; color: #15803d; margin-bottom: 0.5rem;">💰 YOU SAVE: HK$12,500 (84% OFF!)</p>
+                                    <p style="font-size: 1.25rem; color: #374151;">From HK$14,800 to HK$2,300</p>
+                                </div>
+
+                                <div style="background: white; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #86efac; margin-top: 1.5rem;">
+                                    <h3 style="font-size: 1.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem;">🎁 EXCLUSIVE BONUS: Early Bird Gifts for YOU TODAY!</h3>
+                                    <ul style="list-style: none; padding: 0;">
+                                        <li style="margin-bottom: 0.75rem; font-size: 1.125rem;">
+                                            🎓 <strong>BONUS #1:</strong> Extended 60-day (instead of 30-day) post-workshop support (Value: HK$2,000)
+                                        </li>
+                                        <li style="font-size: 1.125rem;">
+                                            🎓 <strong>BONUS #2:</strong> Invitation to exclusive AI leaders alumni networking events (Value: Priceless)
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div style="background: #fef9c3; border: 2px solid #9ca3af; padding: 1.5rem; border-radius: 0.5rem; margin-top: 1.5rem;">
+                                    <p style="text-align: center; font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem;">⏰ This Special Price Expires in:</p>
+                                    <p style="text-align: center; font-size: 2.5rem; font-weight: 700; color: #dc2626;">3 DAYS</p>
+                                    <p style="text-align: center; font-size: 1.125rem; color: #374151; margin-top: 0.5rem;">Or when we reach 16 participants (whichever comes first)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="enroll-button-container" style="text-align: center; margin-bottom: 1rem;">
+                        <button onclick="goToPage('enrollment')" class="btn" style="background: linear-gradient(135deg, #16a34a 0%, #059669 100%); color: white; font-size: 1.875rem; padding: 2rem 4rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                            ENROL NOW - SECURE YOUR SPOT
+                        </button>
+                        <p style="font-size: 1.125rem; color: #4b5563; margin-top: 1rem;">Limited to 16 participants per session</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button onclick="goToPage('investment')" class="btn btn-secondary">
+                            ← Previous
+                        </button>
+                        <button onclick="goToPage('enrollment')" class="btn btn-primary" style="background: linear-gradient(135deg, #16a34a 0%, #059669 100%);">
+                            Enrol Now →
+                        </button>
+                    </div>
+                    
+                    <div class="footer">
+                        <p style="color: #4b5563;">© 2025 Learn Achiever Ltd.</p>
+                        <p style="color: #4b5563;">Enquiry: (WhatsApp) +852 9528 6898</p>
+                    </div>
+                </div>
+            `;
+            
+            goToPage('tier-1');
+        }
+
+        // Price Reveal Functions
+        function revealPrice1() {
+            document.getElementById('price-step-1').classList.add('hidden');
+            document.getElementById('price-step-2').classList.remove('hidden');
+            state.priceRevealed = true;
+        }
+
+        function revealFinalPrice() {
+            document.getElementById('price-step-2').classList.add('hidden');
+            document.getElementById('final-price').classList.remove('hidden');
+            document.getElementById('enroll-button-container').classList.remove('hidden');
+            state.finalPriceRevealed = true;
+        }
+
+        // Reset Quiz
+        function resetQuiz() {
+            state.answers = {};
+            state.score = 0;
+            state.tier = null;
+            state.priceRevealed = false;
+            state.finalPriceRevealed = false;
+            
+            // Clear all selections
+            document.querySelectorAll('.question-option').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.querySelector('input[type="radio"]').checked = false;
+            });
+            
+            // Disable all next/submit buttons
+            for (let i = 1; i <= 9; i++) {
+                const btn = document.getElementById(`next-btn-${i}`);
+                if (btn) btn.disabled = true;
+            }
+            const submitBtn = document.getElementById('submit-btn');
+            if (submitBtn) submitBtn.disabled = true;
+        }
+
+        // Update enrollment page with user data
+        function updateEnrollmentPage() {
+            const tierNames = {
+                vanguard: 'Tier 1: AI Vanguard',
+                architect: 'Tier 2: AI Execution Architect',
+                explorer: 'Tier 3: AI Explorer',
+                imperative: 'Tier 4: AI Transformation Imperative'
+            };
+            
+            const enrollTier = document.getElementById('enroll-tier'); if(enrollTier) enrollTier.textContent = tierNames[state.tier];
+            const enrollScore = document.getElementById('enroll-score'); if(enrollScore) enrollScore.textContent = `Score: ${state.score}/100`;
+        }
+
+        // Override goToPage to update enrollment info and reset pricing
+        const originalGoToPage = goToPage;
+        goToPage = function(pageName) {
+            if (pageName === 'enrollment') {
+                updateEnrollmentPage();
+            }
+            // Reset pricing page state when navigating to it
+            if (pageName === 'partb-3') {
+                state.priceRevealed = false;
+                state.finalPriceRevealed = false;
+                // Reset the price display
+                setTimeout(() => {
+                    const step1 = document.getElementById('price-step-1');
+                    const step2 = document.getElementById('price-step-2');
+                    const finalPrice = document.getElementById('final-price');
+                    if (step1) step1.classList.remove('hidden');
+                    if (step2) step2.classList.add('hidden');
+                    if (finalPrice) finalPrice.classList.add('hidden');
+                }, 100);
+            }
+            originalGoToPage(pageName);
+        };
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeQuestions();
+        });
+
+        // Bounce animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-25px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
